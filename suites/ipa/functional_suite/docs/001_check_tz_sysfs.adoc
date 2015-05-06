@@ -1,0 +1,32 @@
+[[test_001_check_tz_sysfs]]
+==== 001_check_tz_sysfs
+
+.Goal
+The goal of this test is to ascertain if the sysfs pararamaters are populated
+correctly in for the thermal zone.
+
+.Expected Behavior
+The device is expected to have one thermal zone (index zero) and the following
+files are expected to be in sysfs. These files donot include the files that
+are populated by the the bound cooling devices and trip points:
+
+* Base Directory
+** `/sys/class/thermal/thermal_zone0`
+
+* Files
+** `integral_cutoff`
+** `k_d`
+** `k_i`
+** `k_po`
+** `k_pu`
+** `mode`
+** `policy`
+** `power`
+** `subsystem`
+** `sustainable_power`
+** `temp`
+** `type`
+** `uevent`
+
+.Possible Issues
+This test is not expected to fail

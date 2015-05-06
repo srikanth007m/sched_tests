@@ -1,0 +1,29 @@
+[[test_pmu_test_scn08]]
+==== pmu_test_scn08
+
+.Goal
+The aim of this test is to validate the correct event counting on a system
+wide basis across all CPUs in all available clusters in MP configuration, where
+the task is forced to migrate across clusters multiple times.
+
+.Detailed Description
+The task characteristic would be looping structures and function calls in non
+idle modes.
+
+1. The branch program is set for the system to count Branch instructions,
+   branch misses.
+2. Perf is calculated for the grouped mode events occured
+3. Idle mode is not included.
+4. Confirm if the Branch instructions, branch misses generated are matching
+   with the perf results.
+
+The variation to this test case can be whether the chosen counters are grouped
+or not.
+
+.Expected Behavior
+The expected result is that the counters keep correct counting across all the
+CPUs in the systems.
+
+.Possible Issues
+This test is not expected to fails.
+

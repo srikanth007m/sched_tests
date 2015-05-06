@@ -1,0 +1,6 @@
+config COMPONENT_TESTRUNNER_LAUNCHER
+	bool 'testrunner_launcher'
+	default y
+	depends on COMPONENT_TESTRUNNER
+	---help---
+	Deploy the testrunner_launcher component

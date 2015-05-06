@@ -1,0 +1,110 @@
+
+################################################################################
+# Architecture
+config TARGET_ARM_CORTEX_A7
+  bool
+  default false
+config TARGET_ARM_CORTEX_A15
+  bool
+  default false
+config TARGET_ARM_CORTEX_A53
+  bool
+  default false
+config TARGET_ARM_CORTEX_A57
+  bool
+  default false
+
+# big.LITTLE CPU parts
+config TARGET_BIG_CPUPART
+  string
+  default "0xd07" if TARGET_ARM_CORTEX_A57
+  default "0xc0f"
+config TARGET_LITTLE_CPUPART
+  string
+  default "0xd03" if TARGET_ARM_CORTEX_A53
+  default "0xc07"
+
+################################################################################
+# Board
+choice
+  prompt "Board"
+  depends on (TARGET_ANDROID || TARGET_LINUX)
+  default TARGET_JUNO
+
+  config TARGET_JUNO
+    bool "Juno Development Board"
+    select TARGET_ARM_CORTEX_A53
+    select TARGET_ARM_CORTEX_A57
+    ---help---
+    Build for the ARMv8 (Juno)
+
+  config TARGET_TC2
+    bool "Verstile Express TC2"
+    select TARGET_ARM_CORTEX_A7
+    select TARGET_ARM_CORTEX_A15
+    ---help---
+    Build for the Versatile Express (TC2)
+
+  config TARGET_ODROID_3XU
+    bool "Odroid-3XU"
+    select TARGET_ARM_CORTEX_A7
+    select TARGET_ARM_CORTEX_A15
+    select TARGET_EXYNOS5_OCTA
+    select TARGET_GPU_MALI_T628
+    select TARGET_OPENCL_11EP
+    ---help---
+    Build for the Odroid-3XU Board
+    http://www.hardkernel.com
+
+endchoice # Target Board
+
+config TARGET_NAME
+  string
+  default "Juno Development Board" if TARGET_JUNO
+  default "VExpress TC2"           if TARGET_TC2
+  default "Odroid-3XU"             if TARGET_ODROID_3XU
+  default "Native platform"
+
+config TARGET_ID
+  string
+  default "juno_devboard"  if TARGET_JUNO
+  default "vexpress_tc2"   if TARGET_TC2
+  default "exynos_5410"    if TARGET_ODROID_3XU
+  default ""
+
+config TARGET_DESCRIPTION
+  string
+  default "ARM Juno, big.LITTLE GTS (2xCortex-A57 + 4xCortex-A53)" if TARGET_JUNO
+  default "ARM VExpress TC2, big.LITTLE GTS (2xCortex-A15 + 3xCortex-A7)" if TARGET_TC2
+  default "Samsung Exynos 5410, big.LITTLE GTS (4xCortex-A15/A7), PowerVR SGX544MP3" if TARGET_ODROID_3XU
+  default ""
+
+################################################################################
+# big.LITTLE Configuration
+
+comment "big.LITTLE configuration"
+
+config BIGLITTLE_LITTLE_CPUS
+  string "ID range of LITTLE CPUs"
+  default "0 3"  if TARGET_JUNO
+  default "0 2"  if TARGET_TC2
+  default "0 3"  if TARGET_ODROID_3XU
+
+config BIGLITTLE_LITTLE_FREQS
+  string "MHz range of LITTLE CPUs"
+  default " 450  850"  if TARGET_JUNO
+  default " 350 1000"  if TARGET_TC2
+  default "1000 1600"  if TARGET_ODROID_3XU
+
+config BIGLITTLE_BIG_CPUS
+  string "ID range of big CPU"
+  default "4 5"  if TARGET_JUNO
+  default "3 4"  if TARGET_TC2
+  default "4 7"  if TARGET_ODROID_3XU
+
+config BIGLITTLE_BIG_FREQS
+  string "MHz range of big CPUs"
+  default " 450 1100"  if TARGET_JUNO
+  default " 500 1200"  if TARGET_TC2
+  default "1200 2200"  if TARGET_ODROID_3XU
+

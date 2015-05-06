@@ -1,0 +1,26 @@
+[[test_lb_scn_01]]
+==== lb_scn_01
+
+.Goal
+This is to assert about the Performance improvement of the system because of
+global load balancing behaviour of the scheduler.
+
+.Detailed Description
+This scenario does two simultaneous multi-threaded runs of sysbench. The
+expectation is that the scheduler will use all CPUs when there is more load
+than the big CPUs can handle and as the threads finishes the remaining threads
+will be migrated to the big CPUs to get best possible performance.
+
+It is assumed that the number of LITTLE CPUs >= number of big cpus
+
+This test asserts that a periodic balance check that can down-migrate tasks if
+the faster domain is oversubscribed and the slower is under-utilized when there
+is no CPU affinity specified.
+
+.Expected Behavior
+A performance improvement is expected as the scheduler can use the slower cpus
+as well.
+
+.Possible Issues
+This test is not expected to fail.
+

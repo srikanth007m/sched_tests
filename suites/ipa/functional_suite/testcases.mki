@@ -1,0 +1,69 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+install_suite_functional_testcases:
+	@echo "Installing testcases..."
+
+ifdef CONFIG_IPA_FUNCTIONAL_TZ_SYSFS
+	@cd ./suites/ipa/functional_suite && \
+	 cp -R testcases/001_check_tz_sysfs $(INSTALL_DIR)/suites/functional/testcases/
+endif # functional_suite_001_CHECK_TZ_SYSFS
+
+ifdef CONFIG_IPA_FUNCTIONAL_CDEVS
+	@cd ./suites/ipa/functional_suite && \
+	 cp -R testcases/002_check_cdevs $(INSTALL_DIR)/suites/functional/testcases/
+endif # functional_suite_002_CHECK_CDEVS
+
+ifdef CONFIG_IPA_FUNCTIONAL_CPUFREQ_COOLING
+	@cd ./suites/ipa/functional_suite && \
+	 cp -R testcases/003_check_cpufreq_cooling $(INSTALL_DIR)/suites/functional/testcases/
+endif # functional_suite_003_CHECK_CPUFREQ_COOLING
+
+ifdef CONFIG_IPA_FUNCTIONAL_DEVFREQ_COOLING
+	@cd ./suites/ipa/functional_suite && \
+	 cp -R testcases/004_check_devfreq_cooling $(INSTALL_DIR)/suites/functional/testcases/
+endif # functional_suite_004_CHECK_DEVFREQ_COOLING
+
+ifdef CONFIG_IPA_FUNCTIONAL_TRIP_POINTS
+	@cd ./suites/ipa/functional_suite && \
+	 cp -R testcases/005_check_trip_points $(INSTALL_DIR)/suites/functional/testcases/
+endif # functional_suite_005_CHECK_TRIP_POINTS
+
+ifdef CONFIG_IPA_FUNCTIONAL_TZ_CDEVS
+	@cd ./suites/ipa/functional_suite && \
+	 cp -R testcases/006_check_tz_cdevs $(INSTALL_DIR)/suites/functional/testcases/
+endif # functional_suite_006_CHECK_TZ_CDEVS
+
+ifdef CONFIG_IPA_FUNCTIONAL_TZ_CDEV_TRIPS
+	@cd ./suites/ipa/functional_suite && \
+	 cp -R testcases/007_check_tz_cdev_trips $(INSTALL_DIR)/suites/functional/testcases/
+endif # functional_suite_007_CHECK_TZ_CDEV_TRIPS
+
+ifdef CONFIG_IPA_FUNCTIONAL_HIGH_CONTROL_HIGH_TRIGGER
+	@cd ./suites/ipa/functional_suite && \
+	 cp -R testcases/008_high_control_high_trigger $(INSTALL_DIR)/suites/functional/testcases/
+endif # functional_suite_008_HIGH_CONTROL_HIGH_TRIGGER
+
+ifdef CONFIG_IPA_FUNCTIONAL_LOW_CONTROL_HIGH_TRIGGER
+	@cd ./suites/ipa/functional_suite && \
+	 cp -R testcases/009_low_control_high_trigger $(INSTALL_DIR)/suites/functional/testcases/
+endif # functional_suite_009_LOW_CONTROL_HIGH_TRIGGER
+
+ifdef CONFIG_IPA_FUNCTIONAL_LOW_CONTROL_LOW_TRIGGER
+	@cd ./suites/ipa/functional_suite && \
+	 cp -R testcases/010_low_control_low_trigger $(INSTALL_DIR)/suites/functional/testcases/
+endif # functional_suite_010_LOW_CONTROL_LOW_TRIGGER

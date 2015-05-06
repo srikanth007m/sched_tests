@@ -1,0 +1,36 @@
+[[test_massive_intr]]
+==== massive_intr
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present with
+or without the big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+The aim of this test is to observe the scheduler behavior while massive
+interactive processes are being executed. This is to check if the bug exists
+that Some of them occupy CPU time and some processes hardly run.  This test
+program flow is:
+
+1. First process starts child proesses and wait for 5 minutes.
+
+2. Within the test job it sets a signal and waits till main process sends the
+signal to it. So all the spawned threads wait for a common (send to all child
+process) signal to be triggered by the main process to start their execution.
+Upon receiving the signal from the main process, Each child process executes
+"work 8 msec and sleep 1 msec" loop continuously.
+
+3. After 3 minutes have passed, each child processes prints the number of loops
+which executed
+
+4. Each child processes should execute nearly equal number of loops.
+
+Note: Check if RSDL scheduler is enabled
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

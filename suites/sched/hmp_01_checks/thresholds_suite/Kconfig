@@ -1,0 +1,17 @@
+
+menuconfig SCHED_THRESHOLDS
+    bool "HMP thresholds tuning checks"
+    default n
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within basic_suite is to validate
+    the settings of migration thresholds.
+
+
+config SCHED_THRESHOLDS_00_BASIC
+    bool "00_basic"
+    default y
+    depends on SCHED_THRESHOLDS
+    ---help---
+    Check for simple and common thresholds misconfiguration.
+

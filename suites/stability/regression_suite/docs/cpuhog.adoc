@@ -1,0 +1,33 @@
+[[test_cpuhog]]
+==== cpuhog
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+The purpose of this test is to create a set of processes that are going to load
+the runqueue with different cache drain values and check if the kernel doesnot
+fail.
+
+1. The number of tasks are taken from the user. The children registers to
+SIGHUP signal, incrementing a volatile SPIN variable to keep count.
+
+2. The forked children goes on an infinite loop of CPU hog which basically does
+memory operations depending on the cache line size.  The cache line is either
+32 or 16. The memory operations are done on a register pointer variable such
+that cache is being used. These operations happen with a high priority set by
+NICE value after checking if the SPIN variable is set.
+
+3. The parent sends signal SIGHUP to all the children which are cpuhogging and
+thus exits gracefully.
+
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

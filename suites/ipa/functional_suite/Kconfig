@@ -1,0 +1,79 @@
+
+menuconfig IPA_FUNCTIONAL
+    bool "IPA Functional"
+    depends on TARGET_JUNO
+    default n
+    ---help---
+    IPA Functional Test Cases for basic correctness
+
+config IPA_FUNCTIONAL_TZ_SYSFS
+    bool 001_check_tz_sysfs
+    default y
+    depends on IPA_FUNCTIONAL
+    ---help---
+    Check if the thermal zone sysfs parameters are present and sane
+
+config IPA_FUNCTIONAL_CDEVS
+    bool 002_check_cdevs
+    default y
+    depends on IPA_FUNCTIONAL
+    ---help---
+    Check if the cooling devices are correctly populated
+
+config IPA_FUNCTIONAL_CPUFREQ_COOLING
+    bool 003_check_cpufreq_cooling
+    default y
+    depends on IPA_FUNCTIONAL
+    ---help---
+    Check if the cpufreq cooling devices are correctly populated
+
+config IPA_FUNCTIONAL_DEVFREQ_COOLING
+    bool 004_check_devfreq_cooling
+    default y
+    depends on IPA_FUNCTIONAL
+    ---help---
+    Check if the devfreq cooling devices are correctly populated
+
+config IPA_FUNCTIONAL_TRIP_POINTS
+    bool 005_check_trip_points
+    default y
+    depends on IPA_FUNCTIONAL
+    ---help---
+    Check if the trip points are correctly populated
+
+config IPA_FUNCTIONAL_TZ_CDEVS
+    bool 006_check_tz_cdevs
+    default y
+    depends on IPA_FUNCTIONAL
+    ---help---
+    Check if the cooling devices are bound to the thermal zone
+
+config IPA_FUNCTIONAL_TZ_CDEV_TRIPS
+    bool 007_check_tz_cdev_trips
+    default y
+    depends on IPA_FUNCTIONAL
+    ---help---
+    Check if the trip point and cdev association is as expected
+
+config IPA_FUNCTIONAL_HIGH_CONTROL_HIGH_TRIGGER
+    bool 008_high_control_high_trigger
+    default y
+    depends on IPA_FUNCTIONAL
+    ---help---
+    Check the extreme case of both the trip points being set to extemely high
+    values.
+
+config IPA_FUNCTIONAL_LOW_CONTROL_HIGH_TRIGGER
+    bool 009_low_control_high_trigger
+    default y
+    depends on IPA_FUNCTIONAL
+    ---help---
+    Check the case where the second trip point is extremely high and the first
+    one is extremely low.
+
+config IPA_FUNCTIONAL_LOW_CONTROL_LOW_TRIGGER
+    bool 010_low_control_low_trigger
+    default y
+    depends on IPA_FUNCTIONAL
+    ---help---
+    Check the case when both the trip points are extremely low

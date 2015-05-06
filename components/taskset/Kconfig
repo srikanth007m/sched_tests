@@ -1,0 +1,5 @@
+config COMPONENT_TASKSET
+	bool 'taskset'
+	default n
+	---help---
+	Deploy the taskset component

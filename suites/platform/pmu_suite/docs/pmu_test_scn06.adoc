@@ -1,0 +1,35 @@
+[[test_pmu_test_scn06]]
+==== pmu_test_scn06
+
+.Goal
+The aim of the test is to test the negative scenario where the event count is
+set above the available number of counters on the selected big cluster.
+
+.Detailed Description
+If there are more events than counters, the kernel uses time multiplexing to
+give each event a chance to access the monitoring hardware. Multiplexing only
+applies to PMU events. With multiplexing, an event is not measured all the
+time.  At the end of the run, the tool scales the count based on total time
+enabled vs time running.
+
+This provides an estimate of what the count would have been, had the event been
+measured during the entire run. Depending on the workload, there will be blind
+spots which can introduce errors during scaling.
+
+1. The cache and cycles program is set for per sub system (2 big cores in the
+   big cluster) counting of CPU cycles, instruction, cache references, cache
+   misses, branch instructions, branch misses, bus cycles.
+2. Perf is calculated for the events occured
+3. Confirm if the cache references and misses and branch instructions generated
+   are not matching with the perf results.
+
+The variation to this test case can be whether the chosen counters are grouped
+or not.
+
+.Expected Behavior
+The expected result is event not supported when the number of events is more
+than the available number of counters.
+
+.Possible Issues
+This test case is not expected to fail
+

@@ -1,0 +1,35 @@
+[[suite_extended]]
+=== "Extended" Test Suite
+
+.Goal
+
+The primary aim of the test cases within extended_suite is to validate some of
+the boundary conditions related to the functional behaviour of the big.LITTLE
+MP scheduler extensions.
+
+To start the execution of just this test:
+[source,bash]
+----
+$ schedtest-run extended
+----
+
+Following is the list of supported tests
+
+
+include::./extd_test_scn01.1.adoc[]
+
+include::./extd_test_scn01.2a.adoc[]
+
+include::./extd_test_scn01.4.adoc[]
+
+include::./extd_test_scn03.1.adoc[]
+
+include::./extd_test_scn03.2a.adoc[]
+
+include::./extd_test_scn03.4.adoc[]
+
+include::./extd_test_scn04.1.adoc[]
+
+include::./extd_test_scn04.2.adoc[]
+
+// vim: set syntax=asciidoc:

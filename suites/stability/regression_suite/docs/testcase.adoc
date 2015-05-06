@@ -1,0 +1,27 @@
+[[test_testcase]]
+==== testcase
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+In this test, the main thread writes to a global pipe, and the child threads
+read from the global pipe. The number of threads created are 16.  The child
+thread does some CPU intensive task before reading the pipe.  It calculates the
+value of (1+k) * (1-k) and +squareroot+ of k where k is a +double+. Before the
+parent makes the +volatile variable+ +run+ as zero, the thread would have read
+from the pipe and the loop comes out for the child.  The parent sleeps for 3
+seconds and writes to the global pipe before making the +run+ variable to zero
+for about 6 * 10^9 us. That is the calibrated time it takes to calculate the k.
+
+The scheduler behaviour is observed for the way the threads are scheduled.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

@@ -1,0 +1,27 @@
+[[test_stability_test_scn05.1]]
+==== stability_test_scn05.1
+
+.Goal
+This is a stability test to check if all the big.LITTLE MP scheduler extensions
+have been integrated fully and properly.
+
+.Detailed Description
+Idle for a long period of time and check if the kernel is passing the stability
+test without crashing.The following are done to test the kernel.
+
+
+1. For observation of results, save a snapshot of process info from +/proc+
+   filesystem.
+2. Let the system idle for set duration (large duration). The Idle code path
+   should be executed without any panic.
+3. Wait for idle amount time to be completed. For observation, save a snapshot
+   of process info from +/proc+ filesystem.
+4. Confirm if the kernel is still functional, then test is PASSED.
+
+
+.Expected Behavior
+After the stability test of more than 10 hours, kernel should still be
+functional.
+
+.Possible Issues
+This test is not expected to fail.

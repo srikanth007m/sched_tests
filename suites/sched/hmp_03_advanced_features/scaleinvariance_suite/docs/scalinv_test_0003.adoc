@@ -1,0 +1,28 @@
+[[test_scalinv_test_003]]
+==== scalinv_test_003
+
+.Goal
+Test scheduler for errors without the scale invariance.
+
+.Detailed Description
+Without scale invariance, change the freq every 1[s] and check that the
+runnable ratio remains unchanged.  This means that the task is able to get the
+CPU time in the same ratio for every one second when the CPU affinity is set
+and priority is set greater than cut off priority.
+
+The following tasks are done to assert the same.
+
+1. Set time delay between frequency, set frequency of big cluster, set
+   frequency of LITTLE cluster.
+2. Clear existing tasks from the LITTLE CPU. Set CPU affinity of this task to
+   the LITTLE CPU.
+3. Set priority > cutoff priority.
+4. Disable frequency-invariant load scaling
+5. Run test with different frequencies available.
+6. Test if the ratio value of within +/- 10 for all trace points.
+
+Thus, this test checks if without the scheduler support for scale invariance,
+and with frequency of 1[s], then runnable ratio of the task remains unchanged.
+
+.Possible Issues
+This test is not expected to fail

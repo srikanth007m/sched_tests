@@ -1,0 +1,5 @@
+config COMPONENT_REGRESSION_ASSETS
+	bool 'regression_assets'
+	default n
+	---help---
+	Deploy the regression_assets component

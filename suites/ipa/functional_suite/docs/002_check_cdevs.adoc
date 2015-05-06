@@ -1,0 +1,27 @@
+[[test_002_check_cdevs]]
+==== 002_check_cdevs
+
+.Goal
+The primary goal of this test is to check if the cooling devices have been
+populated correctly
+
+.Expected Behavior
+IPA on Juno is expected to have three cooling devices and the following files
+in each cooling device's sysfs directory for indices 0, 1 and 2.
+
+
+* Base Directory
+** `/sys/class/thermal/cooling_device<index>`
+
+* Files
+** `cur_state`
+** `max_state`
+** `power`
+** `subsystem`
+** `type`
+** `uevent`
+
+
+
+.Possible Issues
+This test is not expected to fail

@@ -1,0 +1,34 @@
+[[test_pack_single_cpu]]
+==== pack_single_cpu
+
+.Goal
+This tests for the behaviour of the small task packing.
+
+.Detailed Description
+Considering an MP3 Playback program as the use case for this test, all the
+small tasks consuming less power and periodic in nature with short execution
+time, such as play ringtones, alarms or message tones, play mp3 or fm. These
+tasks disturb CPUs in deep sleep which is bad for power consumption. These
+tasks can be identified using load_contrib. All these tasks should be packed in
+one LITTLE CPU, the packing buddy. While packing, a threshold is seen for the
+task load and the tasks are migrated to the packing buddy if the load is less
+than the threshold.
+
+The performance impact shoud be none or negligible and the power/less energy
+should be consumed.
+
+1. Start Light load threads using cyclic threads program
+2. Enable small task packing and set the packing limit to 1024
+3. Check if all the threads are running on the small task CPU by checking the
+   thread IDs against the CPU list of the running thread.
+4. After results, restore packing limit and packing state.
+
+.Expected Behavior
+Use light load threads to confirm all the light weight threads are packed on to
+a single LITTLE CPU
+
+.Possible Issues
+
+. the scheduler calculates the load in an incorrect manner
+. the migration doesnot happen for some reason
+

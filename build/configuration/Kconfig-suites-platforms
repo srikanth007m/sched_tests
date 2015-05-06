@@ -1,0 +1,2 @@
+source "suites/platform/hwbreakpoint_suite/Kconfig"
+source "suites/platform/pmu_suite/Kconfig"

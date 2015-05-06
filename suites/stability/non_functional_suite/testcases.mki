@@ -1,0 +1,48 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+install_suite_non_functional_testcases:
+	@echo "Installing testcases..."
+ifdef CONFIG_SCHED_STABILITY_NONFUNCTIONAL_STABILITY_TEST_SCN03_1
+	@cd ./suites/stability/non_functional_suite && \
+	 cp -R testcases/stability_test_scn03.1 $(INSTALL_DIR)/suites/non_functional/testcases/
+endif # non_functional_suite_STABILITY_TEST_SCN03_1
+
+ifdef CONFIG_SCHED_STABILITY_NONFUNCTIONAL_STABILITY_TEST_SCN04_1
+	@cd ./suites/stability/non_functional_suite && \
+	 cp -R testcases/stability_test_scn04.1 $(INSTALL_DIR)/suites/non_functional/testcases/
+endif # non_functional_suite_STABILITY_TEST_SCN04_1
+
+ifdef CONFIG_SCHED_STABILITY_NONFUNCTIONAL_STABILITY_TEST_SCN04_2
+	@cd ./suites/stability/non_functional_suite && \
+	 cp -R testcases/stability_test_scn04.2 $(INSTALL_DIR)/suites/non_functional/testcases/
+endif # non_functional_suite_STABILITY_TEST_SCN04_2
+
+ifdef CONFIG_SCHED_STABILITY_NONFUNCTIONAL_STABILITY_TEST_SCN05_1
+	@cd ./suites/stability/non_functional_suite && \
+	 cp -R testcases/stability_test_scn05.1 $(INSTALL_DIR)/suites/non_functional/testcases/
+endif # non_functional_suite_STABILITY_TEST_SCN05_1
+
+ifdef CONFIG_SCHED_STABILITY_NONFUNCTIONAL_STABILITY_TEST_SCN06_1
+	@cd ./suites/stability/non_functional_suite && \
+	 cp -R testcases/stability_test_scn06.1 $(INSTALL_DIR)/suites/non_functional/testcases/
+endif # non_functional_suite_STABILITY_TEST_SCN06_1
+
+ifdef CONFIG_SCHED_STABILITY_NONFUNCTIONAL_STRESS_TEST_SCN01_1
+	@cd ./suites/stability/non_functional_suite && \
+	 cp -R testcases/stress_test_scn01.1 $(INSTALL_DIR)/suites/non_functional/testcases/
+endif # non_functional_suite_STRESS_TEST_SCN01_1
+

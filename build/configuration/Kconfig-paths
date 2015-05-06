@@ -1,0 +1,32 @@
+
+# This is just a set of variables used to define filenames
+# and paths for main components
+
+config INSTALL_DIRNAME
+    string
+    default "out"
+
+config TOOLS_DIRNAME
+    string
+    default "common"
+
+config SUITES_DIRNAME
+    string
+    default "suites"
+
+config EVENTS_DIRNAME
+    string
+    default "ftrace_events"
+
+config INIT_ENV_FILENAME
+    string
+    default "init_env"
+
+config SUITES_FILENAME
+    string
+    default "suites.txt"
+
+config CALIBRATION_FILENAME
+    string
+    default "calib.txt"
+

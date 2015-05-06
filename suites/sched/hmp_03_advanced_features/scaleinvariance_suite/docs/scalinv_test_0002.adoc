@@ -1,0 +1,20 @@
+[[test_scalinv_test_0002]]
+==== scalinv_test_0002
+
+.Goal
+Checks for presence of userspace governor in kernel
+
+.Detailed Description
+The userspace governor Leaves the +Operating Performance Point - OPP+ selection
+entirely to user-space. For example, a shell script might query the available
+OPP range and request a transition to a specific OPP of its choice directly.
+This is an invaluable tool for characterization of DVFS capability.
+
+These information is got by the sys debug interfaces
++/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors+ and checked
+for the string userspace to get the required information.
+
+This test just checks for the presense of userspace in the available governors.
+
+.Possible Issues
+This test is not supposed to fail.

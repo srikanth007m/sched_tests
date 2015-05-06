@@ -1,0 +1,3 @@
+* <<suite_basic,basic>>
+* <<suite_irqs,irqs>>
+* <<suite_thresholds,thresholds>>

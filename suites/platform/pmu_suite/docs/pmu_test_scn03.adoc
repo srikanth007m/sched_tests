@@ -1,0 +1,30 @@
+[[test_pmu_test_scn03]]
+==== pmu_test_scn03
+
+.Goal
+The aim of this test is to validate the correct event counting on a system wide
+basis across all CPUs in all available clusters in MP configuration, where the
+task is forced to migrate across clusters multiple times.
+
+.Detailed Description
+The task characteristic would be with more operations that switch between user
+and kernel mode of operations and looping structures and function calls.
+
+
+1. The branch program is set for per system counting for sample counting of
+   branch instructions and branch misses.
+2. Perf is calculated for the grouped mode events occured
+3. Confirm if the Branch instructions and misses generated are matching with
+   the perf results.
+
+The variants of this test case could be done where the scenarios with a single
+task which is being monitored OR with multiple tasks where the runQ residency
+of the monitored task is more.
+
+.Expected Behavior
+The expected result is that the counters keep correct counting across all the
+CPUs in the systems.
+
+.Possible Issues
+This test is not expected to fail
+

@@ -1,0 +1,27 @@
+[[test_pmu_test_scn04]]
+==== pmu_test_scn04
+
+.Goal
+The aim of this test is to validate the correct event counting on a ‘sub’
+system wide basis across all CPUs within the defined sub system in MP
+configuration, where the task is forced to migrate across clusters multiple
+times.
+
+.Detailed Description
+The task characteristic would be with more memory bound operations on buffers
+larger than cache size to force cache miss scenarios and cache refresh.
+
+
+1. The cache and cycles program is set for per sub system (3 LITTLE cores in
+   the LITTLE cluster) counting of cycles, cache references and misses counts.
+2. Perf is calculated for the grouped mode events occured
+3. Confirm if the cache references and misses generated are matching with the
+   perf results.
+
+.Expected Behavior
+The expected result is that the counters keep correct counting across all the
+CPUs in the specified ‘sub’ systems.
+
+.Possible Issues
+This test is not expected to fail
+

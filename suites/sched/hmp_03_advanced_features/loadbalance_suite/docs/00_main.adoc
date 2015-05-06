@@ -1,0 +1,23 @@
+[[suite_loadbalance]]
+=== "Load Balance" Test Suite
+
+.Goal
+The primary aim of the test cases within loadbalance_suite is to validate
+global load balancing behaviour of the scheduler across CPU domains in a
+big.LITTLE system.
+
+To start the execution of just this test:
+
+[source,bash]
+----
+$ schedtest-run loadbalance
+----
+
+Following is the list of supported tests
+
+include::./lb_scn_00.adoc[]
+
+include::./lb_scn_01.adoc[]
+
+
+// vim: set syntax=asciidoc:

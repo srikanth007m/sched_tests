@@ -1,0 +1,21 @@
+[[test_005_check_trip_points]]
+==== 005_check_trip_points
+
+.Goal
+The goal of this test is to check if the trip points have been created
+correctly.
+
+.Expected Behavior
+JUNO is expected to have two trip points. For the indices 0 and 1 the following
+files must exist
+
+* Base Directory
+** `/sys/class/thermal/thermal_zone0`
+
+* Files
+** `trip_point_<index>_type`
+** `trip_point_<index>_temp`
+** `trip_point_<index>_hyst`
+
+.Possible Issues
+This test is not expected to fail

@@ -1,0 +1,115 @@
+
+menuconfig PLATFORM_PMU
+    bool "PMU support"
+    default n
+    depends on !TARGET_JUNO
+    depends on !TARGET_ODROID_3XU
+    select COMPONENT_BC
+    select COMPONENT_PERF
+    select COMPONENT_PMU_ASSETS
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within pmu_suite is to validate PMU
+    support for a big.LITTLE system.
+
+config PLATFORM_PMU_PMU_CCI_TEST_SCN09
+    bool "pmu_cci_test_scn09"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CCI PMU by running cache on little CPU and counting A7 cacheable reads
+    and write evict transactions.
+
+
+config PLATFORM_PMU_PMU_CCI_TEST_SCN10
+    bool "pmu_cci_test_scn10"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CCI PMU by running "cache -w" on big CPUs and counting events in
+    grouped mode.It checks that when specifying more events than counters, perf
+    returns "<not supported>" for extra counters.
+
+
+config PLATFORM_PMU_PMU_CCI_TEST_SCN11
+    bool "pmu_cci_test_scn11"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CCI PMU by running "cache -w" on big CPUs and counting events in
+    sampling mode. This is done by not grouping the events and specifying more
+    events than counters. The testcase checks that the extrapolated value
+    returned is within range of the golden run.
+
+
+config PLATFORM_PMU_PMU_TEST_SCN01
+    bool "pmu_test_scn01"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CPU PMUs by running the 'cycles' test program and counting
+    'cpu_cycles' and 'instructions' events.
+
+
+config PLATFORM_PMU_PMU_TEST_SCN02
+    bool "pmu_test_scn02"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CPU PMUs by running the 'cache' test program and counting
+    'cache-references' and 'cache-misses' events.
+
+
+config PLATFORM_PMU_PMU_TEST_SCN03
+    bool "pmu_test_scn03"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CPU PMUs by running the 'branch' test program and counting
+    'branch_instructions' and 'branch_misses' events.
+
+
+config PLATFORM_PMU_PMU_TEST_SCN04
+    bool "pmu_test_scn04"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CPU PMUs (only on A7 cluster) by running the 'cache' test program and
+    counting 'cache_references' and 'cache_misses' events.
+
+
+config PLATFORM_PMU_PMU_TEST_SCN05
+    bool "pmu_test_scn05"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CPU PMUs (only on A7 cluster) by running the 'cache' test program and
+    making sure that the last event 'branch_misses' is not supported.
+
+
+config PLATFORM_PMU_PMU_TEST_SCN06
+    bool "pmu_test_scn06"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CPU PMUs (only on A15 cluster) by running the 'branch' test program
+    and making sure that the last event 'icache_refill' is not supported.
+
+
+config PLATFORM_PMU_PMU_TEST_SCN07
+    bool "pmu_test_scn07"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CPU PMUs by running the 'branch' test program and counting kernel-mode
+    'branch_instructions' and 'branch_misses' events.
+
+
+config PLATFORM_PMU_PMU_TEST_SCN08
+    bool "pmu_test_scn08"
+    default y
+    depends on PLATFORM_PMU
+    ---help---
+    Test CPU PMUs by running the 'branch' test program while cpu idle is
+    disabled and counting 'branch_instructions' and 'branch_misses' events.
+

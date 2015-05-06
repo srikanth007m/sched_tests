@@ -1,0 +1,169 @@
+menuconfig REGRESSION_SUITE
+    bool 'Verify regressions using GPL tests'
+    default n
+    select COMPONENT_REGRESSION_ASSETS
+    select COMPONENT_TESTRUNNER
+    ---help---
+    This suite provides a collection of GPL tests colleced from the LWN mailing
+    list, which are used to verify regression on scheduler performances.
+
+
+config REGRESSION_SUITE_AFFINITY_NOTCHANGED
+    bool "affinity_notchanged"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN affinity_notchanged.c
+
+
+config REGRESSION_SUITE_CHEW
+    bool "chew"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN chew.c
+
+
+config REGRESSION_SUITE_CPUHOG
+    bool "cpuhog"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN cpuhog.c
+
+
+config REGRESSION_SUITE_FIFTYP
+    bool "fiftyp"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN fiftyp.c
+
+
+config REGRESSION_SUITE_HACKBENCH
+    bool "hackbench"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN hackbench.c
+
+
+config REGRESSION_SUITE_IRMAN2
+    bool "irman2"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN irman2.c
+
+
+config REGRESSION_SUITE_MAIN_PTH_STR01
+    bool "main_pth_str01"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN main_pth_str01.c
+
+
+config REGRESSION_SUITE_MAIN_PTH_STR02
+    bool "main_pth_str02"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN main_pth_str02.c
+
+
+config REGRESSION_SUITE_MAIN_PTH_STR03
+    bool "main_pth_str03"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN main_pth_str03.c
+
+
+config REGRESSION_SUITE_MIGRATE_TIME
+    bool "migrate_time"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN migrate_time.c
+
+
+config REGRESSION_SUITE_ONETEST
+    bool "onetest"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN onetest.c
+
+
+config REGRESSION_SUITE_PIPE_TEST
+    bool "pipe_test"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN pipe_test.c
+
+
+config REGRESSION_SUITE_PIPE_TEST_1M
+    bool "pipe_test_1m"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN pipe_test_1m.c
+
+
+config REGRESSION_SUITE_STARVE
+    bool "starve"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN starve.c
+
+
+config REGRESSION_SUITE_TENP
+    bool "tenp"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN tenp.c
+
+
+config REGRESSION_SUITE_TESTCASE
+    bool "testcase"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN testcase.c
+
+
+config REGRESSION_SUITE_TEST_FAILED
+    bool "test_failed"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN test_failed.c
+
+
+config REGRESSION_SUITE_TEST_SUCCESS
+    bool "test_success"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN test_success.c
+
+
+config REGRESSION_SUITE_THUD
+    bool "thud"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN thud.c
+
+
+config REGRESSION_SUITE_THUD2
+    bool "thud2"
+    default y
+    depends on REGRESSION_SUITE
+    ---help---
+    This is the test from LWN thud2.c
+

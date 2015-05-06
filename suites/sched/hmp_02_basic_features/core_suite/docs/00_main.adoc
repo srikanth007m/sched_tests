@@ -1,0 +1,33 @@
+
+[[suite_core]]
+=== "Core" Test Suite
+
+This test suite has the aim to validate the basic functional behaviors of the
+big.LITTLE MP scheduler extensions.
+
+The intent of the test design is to generate synthetic tasks with specific load
+characteristics, defined over a configured set of time points, and observe the
+migration pattern across CPU domains based on events reported by the FTrace
+kernel tracer.
+
+The test cases allow specification of a discard period, which is ignored by the
+ftrace analyser,  to avoid considering any task migration that might happen at
+the beginning of the test case execution.
+
+Following is the list of supported tests.
+
+
+include::./core_test_scn01.1.adoc[]
+
+include::./core_test_scn02.1.adoc[]
+
+include::./core_test_scn03.1a.adoc[]
+
+include::./core_test_scn03.2a.adoc[]
+
+include::./core_test_scn04.1.adoc[]
+
+include::./core_test_scn04.2.adoc[]
+
+
+// vim: set syntax=asciidoc:

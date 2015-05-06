@@ -1,0 +1,57 @@
+
+config ITERATIONS
+  int "Number of iterations for selected testcases"
+  default 1
+  ---help---
+  Set the number of iterations to perform for each of the selected testcases.
+  Once a number of iterations greater than 1 is configured, for each testcase
+  will be computed and reported a success/fail rate.
+
+  Usually this option should set to default at the beginning and than to an
+  increased number while keeping selected just the failed testcases.
+  This allows to focus testing on the failed testcases and better evaluated
+  if the failure is just occasional or persistent.
+
+  In unsure say 1.
+
+config FTRACE_BINARY
+  bool
+  default y
+
+config FTRACE_CLEANUP
+  bool "Cleanup FTrace on test success"
+  default y
+  ---help---
+  Some tests require an FTrace to be collected to verify tests goals.
+  Once a test has been verified to be passed, the collected trace could be
+  removed to save some disk space on the target.
+
+  This option allows to force keeping all the FTrace generated during tests
+  executions. This is a feature which could be useful for debugging purposed
+  or in case you are interested on studying how a test actually works.
+
+  The trace generated for each testcase is kept in the corresponding
+  testcase folder in a file named trace.ftrace.gz
+
+  In unsure say Y.
+
+config FTRACE_EVENTS
+  string "Ftrace events to collect"
+  default "-e sched:*"
+  ---help---
+  Set of events collected during the execution of a testcase.
+
+  This string allows to configure the complete set of options
+  to pass to the "trace-cmd start" command to customize its behaviors.
+  It could be mainly used to setup additional more specific events which
+  could be interesting to collect during an experiment, for example to
+  better support the analysis and investigation for a failed test.
+
+  NOTE: some tests requires at least the "sched:sched_switch" events.
+
+  If in doubt, keep the default value: "-e sched:*"
+
+config FTRACE_BUFFER_SIZE
+   int
+   default 40960
+

@@ -1,0 +1,14 @@
+[[test_test_success]]
+==== test_success
+
+.Goal
+Check the sanity of the regression test suite framework itself.
+
+.Detailed Description
+This test checks if the return value is 0.
+
+.Expected Behavior
+The test return the value 0.
+
+.Possible Issues
+This test is not expected to fail.

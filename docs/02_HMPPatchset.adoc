@@ -1,0 +1,472 @@
+
+== The big.LITTLE MP Scheduler Extensions Patchset
+
+This section describes the main patches that form the big.LITTLE MP
+scheduler extensions. The patches are grouped by functionality.
+
+The patchset is structured into these main sections:
+
+* <<blmp_task_load_ratio_tracking,Task load ratio tracking>>
+* <<blmp_heterogeneous_topologies_support,Support for heterogeneous platforms>>
+* <<blmp_domain_and_task_selection_utilities,Task selection>>
+* <<blmp_generic_code_for_tasks_updown_migrations,Up/Down migration code>>
+* <<blmp_updown_migration_thresholds_tuning, Tuning the Up/Down migration thresholds>>
+* <<blmp_initial_set_of_sysfs_attributes, Initial set of sysfs attributes>>
+* Supported task migration strategies
+  - <<blmp_migration_strategy_fork,Fork migration>>
+  - <<blmp_migration_strategy_wakeup,Wake migration>>
+  - <<blmp_migration_strategy_forced,Forced migration>>
+  - <<blmp_migration_strategy_idle-pull,Idle-pull migration>>
+* Optional features
+  - <<blmp_option_small_tasks_packing_stp,Small Task Packing (STP)>>
+  - <<blmp_option_variable_scale_vs,Variable Scale (VS)>>
+* Experimental features
+  - <<blmp_experimental_priority_filter_pf,Priority Filter (PF)>>
+  - <<blmp_experimental_frequency_invariant_fi_scale,Frequency Invariant Scale (FI)>>
+* Special rules
+  - <<blmp_rule_force_all_rt_tasks_to_start_on_little_domain,Task placement for RT tasks>>
+* Tracing support
+  - <<blmp_tracing_load_tracking,Task load tracking metrics>>
+  - <<blmp_tracing_ipi_events,Inter-processor Interrupts (IPI) events>>
+  - <<blmp_tracing_smp_calls,SMP cross-calls>>
+  - <<blmp_tracing_migration_strategies,Migration strategies>>
+* Default configuration options
+  - <<blmp_configuration_default_options, Configuration default options>>
+
+The following sub-sections provides a description for each patch in the
+patchset.
+
+[[blmp_task_load_ratio_tracking]]
+.Task load ratio tracking
+
+Add "load_avg_ratio" to each task, which is a variant of +load_avg_contrib+
+that is not scaled by the task priority. It is calculated as follows:
+
+[source,c]
+----
+  se->avg.load_avg_ratio =
+    runnable_avg_sum * NICE_0_LOAD / (runnable_avg_period + 1)
+----
+
+The sum of +load_avg_ratio+ of each task into a run queue (RQ) is accumulated
+by:
+
+[source,c]
+----
+  rq_of(cfs_rq)->avg.load_avg_ratio
+----
+
+This is updated each time a task is added/removed, to/from the RQ.
+
+
+[[blmp_heterogeneous_topologies_support]]
+.Support for heterogeneous platforms
+
+Introduce the basic SCHED_HMP infrastructure where each class of CPU
+(ie big and LITTLE CPUs) is represented by an +hmp_domain+. Tasks will only be
+moved between these domains when their load profiles and the available capacity on CPUs
+suggest it is beneficial.
+This patch adds the bits required to represent heterogeneous CPU
+domains and configure a system to use them.
+
+_HMP Domains_
+
+Platforms are required to implement the +arch_get_hmp_domains()+
+to set up the platform specific list of hmp_domains.
+There are no restrictions on the number of hmp_domains, however values
+greater than 2 has not been tested. The up/down migration policy is
+simplistic and best suited for two hmp_domains.
+
+It is also required that the platform disables +SD_LOAD_BALANCE+ for the
+appropriate sched_domains. This is needed to ensure that only the
+big.LITTLE MP scheduler extensions control task placement on big and
+LITTLE domains and not the generic scheduler. This is enforced at the +SD_CPU+ level by enabling
+[source,c]
+----
+  CONFIG_DISABLE_CPU_SCHED_DOMAIN_BALANCE
+----
+Moreover, there is currently no support for migration of task groups,
+hence the kernel should be configured with
+[source,c]
+----
+  !CONFIG_SCHED_AUTOGROUP
+----
+
+For the ARM big.LITTLE platform, hmp_domains could be defined at
+compile time, via CPU bitmasks defined by Kconfig options.
+For example on a TC2 board where the LITTLE cluster is the boot cluster, the Kconfig
+generated documentation would report these settings:
+[source,c]
+----
+  CONFIG_HMP_FAST_CPU_MASK="3-4"
+  CONFIG_HMP_SLOW_CPU_MASK="0-2"
+----
+
+Alternatively, the hmp_domains could be defined in the platform specific
+FDT.
+
+_IRQ Affinity_
+
+Once HMP domains are enabled it is advisable to target IRQs to the most power
+efficient cores (LITTLE). This reduces costly wake ups on the less
+power efficient cores (big). In addition, this reduces interruption of work in the
+more performant (big) cores.
+Thus, by default IRQ affinity is set to the LITTLE domain.
+
+
+[[blmp_domain_and_task_selection_utilities]]
+.Task selection
+
+Introduces support methods to select tasks for moving between
+domains, and for specifying the target domains where the tasks are
+to be moved.
+
+These methods implement some heuristics which allow:
+
+* Selecting the heaviest/lightest task from the first 5 runnable tasks of a runqueue
+* Getting the load ratio of the least-loaded CPU in an +hmp_domain+
+* Selecting a slower/faster CPU suitable for a task being moved
+
+A 'next up/down migration delay' is used to prevent tasks from doing another
+migration in the same direction. Another migration is prevented until the delay has expired and
+the task's load has adapted to the compute capacity of the new domain.
+
+In case of multiple CPUs with the same load ratio, the one which is the
+*last-recently-disturbed (LRD)* is selected.
+
+[[blmp_generic_code_for_tasks_updown_migrations]]
+.Up/Down migration code
+
+Add methods to support task up/down migration.
+
++hmp_up_migration+;;
+Check if a task should migrate to a big CPU. ie check whether:
+
+a. The task is not already on the fastest CPUs domain
+b. The task's load ratio is over +hmp_up_threshold+
+c. The interval since the last up migration is greater than the migration delay
+d. There is an existing *idle* CPU on the big domain which is compatible with the task's cpumask
+
++hmp_down_migration+;;
+Check if a task should migrate to a LITTLE CPU, i.e.
+
+a. The task is not already on the slower CPUs domain
+b. The task's load ratio is under +hmp_down_threshold+
+c. The interval since the last down migration is greater than the migration delay
+d. There is an existing CPU on the LITTLE domain which is compatible with the task's cpumask
+
++hmp_can_migrate_task+;;
+Check if a task could be migrated to a specified CPU, i.e.
+
+a. The task is not currently running
+b. The destination CPU is compatible with the task's cpumask
+c. The cache cold
+d. There have been too many failed load balance attempts
+
++hmp_offload_down+;;
+Check if it is NOT convenient to offload a task on a slower CPU, i.e.
+
+a. There are idle CPUs on the current domain
+b. The task is the only CFS load in the current CPU
+c. The task is not starving because of higher priority loads using more
+   than 25% of the available CPU bandwidth
+d. The LITTLE domain has no idle CPUs
+
++hmp_migrate_runnable_task+;;
+Move a task in a runnable state to another CPU.
+The required information such as the destination CPU and the task to be
+moved are expected to be defined by these RQ members:
++rq->push_cpu+ and +rq->migrate_task+
+
++move_specific_task+;;
+Actual function to try moving a task between two CPUs
+
+[[blmp_updown_migration_thresholds_tuning]]
+.Tuning the Up/Down migration thresholds
+
+When the up-threshold is at 512 on TC2, the behaviour is acceptable since
+any graphics related tasks are very heavy due to lack of a GPU on this
+system. Increasing the up-threshold does not reduce power consumption.
+
+When a GPU is present, graphic tasks tend to be much less CPU-heavy and
+so additional power may be saved by having a higher threshold.
+
+[[blmp_initial_set_of_sysfs_attributes]]
+.Initial set of sysfs attributes
+
+In order to allow user-space to restrict known low-load tasks to LITTLE
+CPUs, this patch exports the domain descriptions from the kernel to
+user-space. Up and down migration thresholds are also exported.
+
+All the HMP related attributes are exposed as sysfs attributes under:
++/sys/kernel/hmp+
+For example, on a TC2 board you see the following:
+
+  /sys/kernel/hmp/down_threshold:512
+  /sys/kernel/hmp/hmp_domains:18 07
+  /sys/kernel/hmp/up_threshold:700
+
+[[blmp_migration_strategy_fork]]
+.Fork migration
+
+Goals:
+
+1. Spawn new tasks on big cores, but
+2. Keep kernel threads and the direct descendants of the init task on
+the LITTLE domain.
+
+System services are generally started by init, whilst kernel threads are
+started by kthreadd. We do not want to give those tasks a head start, as
+this costs power for very little benefit. We do however wish to do that
+for tasks which the user launches.
+
+Further, some tasks allocate per-cpu timers directly after launch which
+can lead to those tasks being always scheduled on a big CPU when there
+is no computational need to do so. Not promoting services to big CPUs on
+launch will prevent that unless a service allocates their per-cpu
+resources after a period of intense computation, which is not a common
+pattern.
+
+[[blmp_migration_strategy_wakeup]]
+.Wake migration
+
+Goals:
+
+1. Keep just a single task on each CPU of the big domain
+
+Once a task wakes up, this patch forces it to migrate to a big CPU if
+it's load is greater than +hmp_up_threshold+. Conversely if the task's
+load is lesser than +hmp_down_threshold+, the task is forced to migrate
+to a LITTLE CPU.
+
+In any other case the task is not allowed to migrate to a CPU which is
+not part of its current domain.
+
+[[blmp_migration_strategy_forced]]
+.Forced migration
+
+Goals:
+
+1. Periodically check the load ratio of the running tasks
+2. Move running tasks with a significant load ratio to a
+   CPU in the big domain
+3. Move running tasks with a low load ratio to a CPU
+   in the LITTLE domain
+4. Do not have more than one task per CPU on the faster domain
+
+Force migration of runnable tasks takes place when load balancing is triggered.
+
+Tasks running in a less capable hmp_domain may change to become more
+demanding and should therefore be migrated up. Since they are unlikely
+to go through the +select_task_rq_fair()+ path anytime soon they need special
+attention.
+
+This patch introduces a period check (+SCHED_TICK+) of the haviest
+runnable task on all runqueues and sets up a forced migration using
++stop_machine_no_wait()+ if the task needs to be migrated.
+
+Ideally, this should not be implemented by polling all runqueues.
+
+hmp_force_up_migration checks RQs for tasks that need to be migrated to a faster cpu.
+This code is serialized by the +hmp_force_migration+ spinlock, which
+ensure its execution by a single CPU, and it could be triggered
+by the scheduler tick (if needed) and on nohz idle balancing.
+
+[[blmp_up_migration_to_idle_cpu]]
+.Up migration to idle CPU
+
+When a forced up-migration should move a task to an idle CPU, instead of
+stopping the task to be migrated until the target CPU becomes available,
+we interrupt the target CPU and ask it to pull a task.  This allows the
+current eligible task to continue executing on the original CPU while the
+target CPU wakes.
+A pinned timer is used to prevent the pulling CPU going back into
+power-down with pending up-migrations.
+
+[[blmp_migration_strategy_idle-pull]]
+.Idle-pull migration
+
+Goals:
+
+1. Keep CPUs in faster domains running tasks with a significant
+   load ratio
+
+When a CPU on the faster domain goes idle, up-migrate anything which is
+above the threshold while running on a CPU of a slower domain.
+
+When looking for a task to be idle-pulled, we do not consider tasks where the
+affinity does not allow them to be placed on the target CPU.  Moreover, we
+ensure that tasks with restricted affinity do not block the selection of other
+unrestricted busy tasks.
+
++hmp_get_heaviest_task+ is used to identify the most effective task
+to by idle-pulled from the slower domain into the faster one.
+
+The CPU stopper is used only when the task to be migrated is currently
+running the source CPU. Otherwise the task is moved by just locking
+the source and destination run queues.
+
+[[blmp_option_small_tasks_packing_stp]]
+.Small Task Packing (STP)
+
+Goals:
+
+1. Enqueue as many tasks as possible on a small number of LITTLE CPUs
+2. Wake an idle LITTLE CPU only if all other CPUs on the same domain have a
+   load higher than 80%
+
+When a task wakes up on a CPU of the LITTLE domain, fill/pack this domain's
+CPUs rather than spread tasks on them.
+
+Two new sysfs files have been added to +/sys/kernel/hmp+ to control
+the packing behaviour:
+
+- +packing_enable+: task packing enabled (1) or disabled (0)
+- +packing_limit+: runqueues will be filled up to this load ratio
+
+This functionality is disabled by default on TC2 as it lacks per-cpu
+power gating, so packing small tasks on this platform is of little
+benefit.
+
+[[blmp_option_variable_scale_vs]]
+.Variable Scale (VS)
+
+Allow changing the load average period used in the task load average
+computation through a sysfs exported attribute:
+  /sys/kernel/hmp/load_avg_period_ms
+
+This is the time in milliseconds to go from 0 to 0.5 load average while running,
+or the time to go from 1 to 0.5 load averagewhile sleeping.
+
+The default one used is 32, which gives the same load_avg_ratio
+computation than without this patch. These functions also allow
+changing the up and down threshold of HMP using
++/sys/kernel/hmp/{up,down}_threshold+. Both must be between 0 and
+1024. The thresholds are divided by 1024 before being compared
+to the load_avg_ratio.
+
+[[blmp_experimental_priority_filter_pf]]
+.Priority Filter (PF)
+
+Introduces a priority threshold which prevents low priority tasks
+from migrating to faster hmp_domains.
+This is useful for user-space software which assigns lower task priority
+to background tasks.
+
+[[blmp_experimental_frequency_invariant_fi_scale]]
+.Frequency Invariant (FI) scale
+
+Use load as a representation the used CPU _"potential compute capacity"_
+rather than a representation of its _"current compute capacity"_.
+
+If CPUFreq is enabled, scale load in accordance with current frequency.
+As long as the CPUFreq subsystem correctly reports the current operating
+frequency, the scaling should self tune.
+
+Powersave/performance CPUFreq governors are detected and scaling is
+disabled while these governors are in use.  Indeed,  when a
+single-frequency governor is in use, potential CPU capacity is static.
+
+An additional sysfs attribute is exposed:
+
+  /sys/kernel/hmp/frequency_invariant_load_scale
+
+which allows enabling (write 1) or disabling (write 0) this
+(experimental) feature.
+
+[[blmp_rule_force_all_rt_tasks_to_start_on_little_domain]]
+.Task placement for RT tasks
+
+This patch restricts the allowed CPU mask for RT tasks that are initially started
+with a full cpu mask on the LITTLE domain.
+
+An RT task is specified as real time in +__setscheduler()+ which is ultimately
+called for all RT tasks (kernel and user land). In this function we
+restrict the allowed CPU mask to the LITTLE domain.
+
+This also prevents pushing a RT task at a later time to the big domain.  This is
+because the function +find_lowest_rq()+ will only recognize the allowed CPU
+mask of a task to find the new CPU the task runs on. However this does not
+prevent an implementer from changing the affinity mask by taskset or other
+mechanism.
+
+Current limitations of this patch:
+
+* Since we do not have an API to get the CPU mask of the LITTLE cluster,
+hmp_slow_cpu_mask is made global in +arm/kernel/topology.c+ for now.
+
+* The +watchdog_enable()+ function calls +sched_setscheduler()+ before
++kthread_bind()+ for the CPU specific watchdog kernel threads. The order of
+these two calls has to be changed to make this patch work.
+
+[[blmp_tracing_load_tracking]]
+Task load tracking metrics
+
+Tracepoints:
+
+1. +sched_rq_nr_running+
+2. +sched_rq_runnable_load+
+3. +sched_rq_runnable_ratio+
+4. +sched_task_load_contrib+
+5. +sched_task_runnable_ratio+
+6. +sched_task_usage_ratio+
+
+Adds ftrace events for key variables related to the entity
+load-tracking to help debug scheduler behaviour.
+
+Allows tracing of load contribution and runqueue residency ratio for
+both entities and runqueues as well as entity CPU usage ratio.
+
+[[blmp_tracing_ipi_events]]
+Inter-processor Interrupts (IPI) events
+
+Tracepoints:
+
+1. +arm_ipi_send+
+2. +arm_ipi_exit+
+3. +arm_ipi_entry+
+
+Add tracepoints for IPI raised events as well as start and end of the
+IPI handler. These are used to inspect the sources of CPU wake-ups which are
+not already traced.
+
+[[blmp_tracing_smp_calls]]
+.SMP cross-calls
+
+Tracepoints:
+1. +smp_call_func_send+
+2. +smp_call_func_exit+
+3. +smp_call_func_entry+
+
+Generic tracing for smp_cross_call function calls.
+
+[[blmp_tracing_migration_strategies]]
+.tracing: Migration strategies
+
+Tracepoints:
+1. +sched_hmp_migrate+
+2. +sched_hmp_migrate_force_running+
+3. +sched_hmp_migrate_idle_running+
+4. +sched_hmp_offload_abort+
+5. +sched_hmp_offload_succeed+
+
+The +sched_hmp_migrate+ tracepoint emits a +force=<n>+ field:
+ +force=0 : wakeup migration+
+ +force=1 : forced migration+
+ +force=2 : offload migration+
+ +force=3 : idle pull migration+
+
+Tracepoints exposing offload decisions report the value of
++rq->nr_running+ so that we can look back to see what state the RQ was
+in at the time.
+
+[[blmp_configuration_default_options]]
+.Configuration default options
+
+Adds config fragments used to enable most of the features
+used by big LITTLE MP.
+The scheduler will default packing to disabled, but this includes the
+feature so that we can test it more easily.
+
+
+// vim: set syntax=asciidoc:

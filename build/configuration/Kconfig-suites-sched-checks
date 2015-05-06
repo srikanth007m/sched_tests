@@ -1,0 +1,3 @@
+source "suites/sched/hmp_01_checks/basic_suite/Kconfig"
+source "suites/sched/hmp_01_checks/irqs_suite/Kconfig"
+source "suites/sched/hmp_01_checks/thresholds_suite/Kconfig"

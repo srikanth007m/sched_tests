@@ -1,0 +1,48 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+install_suite_core_testcases:
+	@echo "Installing testcases..."
+ifdef CONFIG_SCHED_BASIC_CORE_CORE_TEST_SCN01_1
+	@cd ./suites/sched/hmp_02_basic_features/core_suite && \
+	 cp -R testcases/core_test_scn01.1 $(INSTALL_DIR)/suites/core/testcases/
+endif # core_suite_CORE_TEST_SCN01_1
+
+ifdef CONFIG_SCHED_BASIC_CORE_CORE_TEST_SCN02_1
+	@cd ./suites/sched/hmp_02_basic_features/core_suite && \
+	 cp -R testcases/core_test_scn02.1 $(INSTALL_DIR)/suites/core/testcases/
+endif # core_suite_CORE_TEST_SCN02_1
+
+ifdef CONFIG_SCHED_BASIC_CORE_CORE_TEST_SCN03_1A
+	@cd ./suites/sched/hmp_02_basic_features/core_suite && \
+	 cp -R testcases/core_test_scn03.1a $(INSTALL_DIR)/suites/core/testcases/
+endif # core_suite_CORE_TEST_SCN03_1A
+
+ifdef CONFIG_SCHED_BASIC_CORE_CORE_TEST_SCN03_2A
+	@cd ./suites/sched/hmp_02_basic_features/core_suite && \
+	 cp -R testcases/core_test_scn03.2a $(INSTALL_DIR)/suites/core/testcases/
+endif # core_suite_CORE_TEST_SCN03_2A
+
+ifdef CONFIG_SCHED_BASIC_CORE_CORE_TEST_SCN04_1
+	@cd ./suites/sched/hmp_02_basic_features/core_suite && \
+	 cp -R testcases/core_test_scn04.1 $(INSTALL_DIR)/suites/core/testcases/
+endif # core_suite_CORE_TEST_SCN04_1
+
+ifdef CONFIG_SCHED_BASIC_CORE_CORE_TEST_SCN04_2
+	@cd ./suites/sched/hmp_02_basic_features/core_suite && \
+	 cp -R testcases/core_test_scn04.2 $(INSTALL_DIR)/suites/core/testcases/
+endif # core_suite_CORE_TEST_SCN04_2
+

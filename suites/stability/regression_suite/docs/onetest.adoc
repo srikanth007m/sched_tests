@@ -1,0 +1,28 @@
+[[test_onetwotest]]
+==== onetwotest
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+This test is to check the behaviour of the interativity of the scheduler. The
+scheduler has to schedule all the processes and not hog one process.
+
+This test is a simple 2 processes creating threads and waiting for those
+threads to be terminated, writing in one pipe and reading in the other pipe.
+The order of scheduling these two threads is checked for behaviour.
+
+The main process forks a child process. Both parent and child processes
+indefinitely creates a thread and waits for that thread to be terminated.
+Everytime a thread is created and while being waited for it to terminate both
+the parent process and the child process prints out a unique process id.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

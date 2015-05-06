@@ -1,0 +1,39 @@
+
+menuconfig SCHED_ADVANCED_LOADBALANCE
+    bool "Load balance support across CPUs domains"
+    default n
+    select COMPONENT_BC
+    select COMPONENT_FUNCTESTLIB_SH
+    select COMPONENT_SYSBENCH
+    select COMPONENT_TASKLIBRARY
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within loadbalance_suite is to validate
+    global load balancing behaviour of the scheduler across CPU domains in a
+    big.LITTLE system.
+
+config SCHED_ADVANCED_LOADBALANCE_LB_SCN_00
+    bool "lb_scn_00"
+    default y
+    depends on SCHED_ADVANCED_LOADBALANCE
+    ---help---
+    This scenario does two multi-threaded runs of sysbench: One with affinity
+    set to the fast cpus, and one with default affinity (all).
+
+    A performance improvement is expected in the second case as the scheduler
+    can use the slower cpus as well.
+
+
+config SCHED_ADVANCED_LOADBALANCE_LB_SCN_01
+    bool "lb_scn_01"
+    default y
+    depends on SCHED_ADVANCED_LOADBALANCE
+    ---help---
+    This scenario does two simultaneous multi-threaded runs of sysbench.
+
+    The expectation is that the scheduler will use all cpus when there is more
+    load than the big cpus can handle and as the threads finishes the remaining
+    threads will be migrated to the big cpus to get best possible performance.
+
+    ASSUMPTION: number of little cpus >= number of big cpus
+

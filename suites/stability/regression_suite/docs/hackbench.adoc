@@ -1,0 +1,44 @@
+[[test_hackbench]]
+==== hackbench
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present with
+or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+Hackbench is both a benchmark and a stress test for the Linux kernel scheduler.
+It's main job is to create a specified number of pairs of  schedulable
+entities (either  threads or traditional processes) which communicate via
+either sockets or pipes and time how long it takes for each pair to send data
+back and forth.  It is a general scheduler benchmark that is sensitive to
+regressions in the scheduler fast-path.
+
+In the initialisation phase it creates 'n' groups of 20 receiver child process
+and 20 sender child process, connected via 20 separate pipes/socket streams,
+where 'n' is user specified number of groups or defaulted to a value.
+
+It Tests groups of 20 processes spraying to 20 receivers. It Waits for all
+processes to be ready. It Creates the pipe between client and server. And then,
+Sender sprays loop messages down each file descriptor. After that, it Reaps
+them all.
+
+When all the receiver and sender child process' are ready, then the test would
+trigger (by writing into one of the 2 fds setup in the main process) the
+writing of 100 characters each by all the sender child process to the receiver
+child process via its own pipe/socket stream The process then waits for all the
+number of spawned receiver and sender child process to terminate (simply
+counting/waiting for the number of thread it initially spawned to signal
+termination).
+
+This test fundamentally computes the performance of this data traffic by
+measuring the time taken for all the groups of sender-receivers sending this
+100 bytes across multiple pipes.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

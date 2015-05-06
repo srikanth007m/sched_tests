@@ -1,0 +1,51 @@
+
+################################################################################
+# Target
+
+choice
+  prompt "Target Device"
+
+  config TARGET_ANDROID
+    bool "Android"
+    ---help---
+    Deploy and run test suite on an Android system.
+
+  config TARGET_LINUX
+    bool "Linux"
+    ---help---
+    Deploy and run test suite on a Linux system.
+
+  config TARGET_NATIVE
+    bool "Native"
+    ---help---
+    Run the test suite on the host system.
+
+endchoice
+
+config TARGET_PLATFORM
+  string
+  default "android" if TARGET_ANDROID
+  default "linux"   if TARGET_LINUX
+  default "native"  if TARGET_NATIVE
+  default "unknown"
+
+
+################################################################################
+# Board Selection
+
+source "build/platforms/Kconfig-boards"
+
+################################################################################
+# Cross-Toolchain Selection
+
+comment "Toolchain"
+
+config CROSS_COMPILER
+  string "Cross-Compiler prefix"
+  default "arm-linux-gnueabihf-"
+  ---help---
+  The prefix of the cross-compiler toolchain to use.
+
+  The defined toolchain must be available in the path of the environment used to
+  run the tests. By default the Linaro ARM toolchain is expected:
+  http://www.linaro.org/downloads/

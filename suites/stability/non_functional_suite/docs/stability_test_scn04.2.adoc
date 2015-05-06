@@ -1,0 +1,34 @@
+[[test_stability_test_scn04.2]]
+==== stability_test_scn04.2
+
+.Goal
+This is a stability test to check if all the big.LITTLE MP scheduler extensions
+have been integrated fully and properly.
+
+.Detailed Description
+Create a large task pool for HMP migration and Hot unplug all big cores from
+either domains to check if the kernel is passing the stability test without
+crashing.The following are done to create large task pool for HMP migration and
+test the kernel.
+
+1. For observation of results, save a snapshot of process info from +/proc+
+filesystem.
+
+2. Using synthetic task library, generate 100 'heavy' tasks, with varying nice
+values. Due to Global Balancing behaviour, both Big and Little domains are
+fully utilized.
+
+3. Hot unplug all 2 big cores from the big domain, the reduced core
+   does not affect HMP migration operations.
+
+4. Wait for all the task library to be completed. For observation, save a
+snapshot of process info from +/proc+ filesystem.
+
+5. Confirm if the kernel is still functional, then test is PASSED.
+
+.Expected Behavior
+After the stability test of more than 10 hours, kernel should still be
+functional.
+
+.Possible Issues
+This test is not expected to fail.

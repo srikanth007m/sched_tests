@@ -1,0 +1,31 @@
+[[test_basiccheck]]
+==== basiccheck
+
+.Goal
+Use heavy and light load generating threads to confirm that high load threads
+go to 'fast' CPUs and low load threads go to 'slow' CPUs using the big.LITTLE
+MP scheduler extensions.
+
+.Detailed Description
+The intent of the test design is to generate synthetic tasks with specific load
+characteristics, and check if the light tasks are running on the LITTLE cores
+and the heavy tasks are running on the big cores. The big and LITTLE CPU lists are
+obtained from the proc interface +/proc/cpuinfo+.
+
+The tasklibrary generates initially a low load which is more than the number of
+LITTLE cores in the system. This is to check if the low load is going to the
+LITTLE core only and not to big cores. The tasklibrary then generates a heavy
+load less than the number of big cores to ensure that the heavy tasks stay
+within big cores. Reason being, It might spill over to LITTLE cores due to
+Global Load Balancing Behaviour.
+
+.Expected Behavior
+
+The low load is going to the LITTLE core only and that the heavy tasks are
+staying within big cores.
+
+.Possible Issues
+Since the background tasks on an android system cannot be controlled, this test
+could fail intermittently if a background android task is hogging the big CPU
+and forcing the 'heavy' task to end up in the LITTLE CPU.
+

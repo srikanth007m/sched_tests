@@ -1,0 +1,29 @@
+
+mainmenu "Sched Test Configuration"
+
+config DONE
+  bool
+  default y
+
+source "build/configuration/Kconfig-paths"
+
+menu "Platform"
+  source "build/platforms/Kconfig"
+endmenu
+
+menu "Suites"
+  source "build/configuration/Kconfig-suites"
+endmenu
+
+menu "Components"
+  source "build/configuration/Kconfig-components"
+endmenu
+
+menu "Deployment"
+  source "build/deployment/Kconfig"
+endmenu
+
+menu "Results"
+  source "build/configuration/Kconfig-results"
+endmenu
+

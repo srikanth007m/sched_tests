@@ -1,0 +1,27 @@
+[[test_FT0002]]
+==== "FT0002" Test Case
+
+.Goal
+This test suite has the aim to assert that the scheduler has a CPU-level domain
+with load balancing turned off.
+
+.Detailed Description
+To provide a way for user to dynamically change the behaviour of load balance,
++SD_LOAD_BALANCE+ flags of scheduler domain are set/unset. The scheduler
+initially has the flag set to '0' such that the Load Balancing feature is
+turned off.
+
+This is checked by +/proc/sys/kernel/sched_domain/cpu#/domain#/flags+
+dynamically. It tests if the scheduler is initially assigned a 1 to
++SD_LOAD_BALANCE+ flag of the domain in the CPU list.
+
+.Expected Behavior
+The scheduler has at least one domain with load balancing feature turned off.
+
+NOTE: load balancing at the CPU level is turned off since it is replaced by the
+      big/little task classification. The big.LITTLE MP scheduler extensions will handle moving
+      tasks among the two clusters based on their tracked load.
+
+.Possible Issues
+This could fail if the platform has not been initialized with the load balance
+off for atleast one of its domains.

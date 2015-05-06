@@ -1,0 +1,12 @@
+Source: sched-tests
+Section: misc
+Priority: extra
+Maintainer: Riku Voipio <riku.voipio@linaro.org>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+
+Package: sched-tests
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Schedule tests for big.LITTLE
+ Schedule tests for big.LITTLE

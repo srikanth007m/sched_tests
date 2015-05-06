@@ -1,0 +1,20 @@
+[[test_FT0013]]
+==== "FT0013" Test Case
+
+.Goal
+The aim is to assert that the scheduler no longer prints fast/slow CPUs during
+boot.
+
+.Detailed Description
+The assertion is that the scheduler is not printing CPU indication in the boot
+log. The big.LITTLE MP scheduler extensions used to print this info in the boot
+log, but does not do this any longer.
+1. Get the big CPU list in the bootlog.
+2. Get the LITTLE CPU list in the bootlog.
+3. Combine both the results
+If the results show that there is big LITTLE CPU list present in the boot log,
+then the test is passed else the test fails.
+
+.Expected Behavior
+The results show that there is no big LITTLE CPU list info present in the Boot
+log.

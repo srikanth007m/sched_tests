@@ -1,0 +1,60 @@
+
+menuconfig SCHED_STABILITY_NONFUNCTIONAL
+    bool "HMP stability under stress scenarios"
+    default n
+    select COMPONENT_AFFINITY_TOOLS
+    select COMPONENT_BUNCH_OF_TASKS
+    select COMPONENT_PLATFORM_SH
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within non_functional_suite is to validate
+    the HMP kernel's ability to perform in stress scenarios and to assess platform
+    stability with HMP patches being active.
+
+config SCHED_STABILITY_NONFUNCTIONAL_STABILITY_TEST_SCN03_1
+    bool "stability_test_scn03.1"
+    default y
+    depends on SCHED_STABILITY_NONFUNCTIONAL
+    ---help---
+    Large task pool for HMP migration, for at least 10 hours
+
+
+config SCHED_STABILITY_NONFUNCTIONAL_STABILITY_TEST_SCN04_1
+    bool "stability_test_scn04.1"
+    default y
+    depends on SCHED_STABILITY_NONFUNCTIONAL
+    ---help---
+    Hot unplug cores from either domains when large pool of tasks are being active
+
+
+config SCHED_STABILITY_NONFUNCTIONAL_STABILITY_TEST_SCN04_2
+    bool "stability_test_scn04.2"
+    default y
+    depends on SCHED_STABILITY_NONFUNCTIONAL
+    ---help---
+    Hot unplug all big cores when large pool of tasks are being active
+
+
+config SCHED_STABILITY_NONFUNCTIONAL_STABILITY_TEST_SCN05_1
+    bool "stability_test_scn05.1"
+    default y
+    depends on SCHED_STABILITY_NONFUNCTIONAL
+    ---help---
+    Idling for long period
+
+
+config SCHED_STABILITY_NONFUNCTIONAL_STABILITY_TEST_SCN06_1
+    bool "stability_test_scn06.1"
+    default y
+    depends on SCHED_STABILITY_NONFUNCTIONAL
+    ---help---
+    Repeated entry of idle scenario
+
+
+config SCHED_STABILITY_NONFUNCTIONAL_STRESS_TEST_SCN01_1
+    bool "stress_test_scn01.1"
+    default y
+    depends on SCHED_STABILITY_NONFUNCTIONAL
+    ---help---
+    Large task pool for HMP migration.
+

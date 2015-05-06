@@ -1,0 +1,13 @@
+[[test_003_check_cpufreq_cooling]]
+==== 003_check_cpufreq_cooling
+
+.Goal
+The goal of this test is to check if the cpufreq cooling devices are
+instantiated correctly
+
+.Expected Behavior
+JUNO has two cpufreq domains and is expected to have two cpufreq cooling
+devices
+
+.Possible Issues
+This test is not expected to fail

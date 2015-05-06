@@ -1,0 +1,118 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+install_suite_regression_testcases:
+	@echo "Installing testcases..."
+ifdef CONFIG_REGRESSION_SUITE_AFFINITY_NOTCHANGED
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/affinity_notchanged $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_AFFINITY_NOTCHANGED
+
+ifdef CONFIG_REGRESSION_SUITE_CHEW
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/chew $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_CHEW
+
+ifdef CONFIG_REGRESSION_SUITE_CPUHOG
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/cpuhog $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_CPUHOG
+
+ifdef CONFIG_REGRESSION_SUITE_FIFTYP
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/fiftyp $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_FIFTYP
+
+ifdef CONFIG_REGRESSION_SUITE_HACKBENCH
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/hackbench $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_HACKBENCH
+
+ifdef CONFIG_REGRESSION_SUITE_IRMAN2
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/irman2 $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_IRMAN2
+
+ifdef CONFIG_REGRESSION_SUITE_MAIN_PTH_STR01
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/main_pth_str01 $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_MAIN_PTH_STR01
+
+ifdef CONFIG_REGRESSION_SUITE_MAIN_PTH_STR02
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/main_pth_str02 $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_MAIN_PTH_STR02
+
+ifdef CONFIG_REGRESSION_SUITE_MAIN_PTH_STR03
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/main_pth_str03 $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_MAIN_PTH_STR03
+
+ifdef CONFIG_REGRESSION_SUITE_MIGRATE_TIME
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/migrate_time $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_MIGRATE_TIME
+
+ifdef CONFIG_REGRESSION_SUITE_ONETEST
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/onetest $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_ONETEST
+
+ifdef CONFIG_REGRESSION_SUITE_PIPE_TEST
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/pipe_test $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_PIPE_TEST
+
+ifdef CONFIG_REGRESSION_SUITE_PIPE_TEST_1M
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/pipe_test_1m $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_PIPE_TEST_1M
+
+ifdef CONFIG_REGRESSION_SUITE_STARVE
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/starve $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_STARVE
+
+ifdef CONFIG_REGRESSION_SUITE_TENP
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/tenp $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_TENP
+
+ifdef CONFIG_REGRESSION_SUITE_TESTCASE
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/testcase $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_TESTCASE
+
+ifdef CONFIG_REGRESSION_SUITE_TEST_FAILED
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/test_failed $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_TEST_FAILED
+
+ifdef CONFIG_REGRESSION_SUITE_TEST_SUCCESS
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/test_success $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_TEST_SUCCESS
+
+ifdef CONFIG_REGRESSION_SUITE_THUD
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/thud $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_THUD
+
+ifdef CONFIG_REGRESSION_SUITE_THUD2
+	@cd ./suites/stability/regression_suite && \
+	 cp -R testcases/thud2 $(INSTALL_DIR)/suites/regression/testcases/
+endif # regression_suite_THUD2
+

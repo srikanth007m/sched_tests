@@ -1,0 +1,72 @@
+
+menuconfig SCHED_BASIC_CORE
+    bool "Basic functional behavior"
+    default n
+    select COMPONENT_BASICS_SH
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within core_suite is to validate the
+    basic functional behaviour of big.LITTLE MP reference patches.
+
+config SCHED_BASIC_CORE_CORE_TEST_SCN01_1
+    bool "core_test_scn01.1"
+    default y
+    depends on SCHED_BASIC_CORE
+    ---help---
+    This starts with light task(s) on little domain however the computed load
+    increases due to load pattern (being in runQ).  Hence the migration
+    criteria is met it migrates to big domain.
+    The task gets the CPU immediately.
+
+
+config SCHED_BASIC_CORE_CORE_TEST_SCN02_1
+    bool "core_test_scn02.1"
+    default y
+    depends on SCHED_BASIC_CORE
+    ---help---
+    This starts with a heavy task on big domain however the computed load
+    decreases due to load pattern (being in idle). Hence the migration criteria
+    is met and irrespective of the task priority it migrates to little domain.
+    The task gets the CPU immediately.
+
+
+config SCHED_BASIC_CORE_CORE_TEST_SCN03_1A
+    bool "core_test_scn03.1a"
+    default y
+    depends on SCHED_BASIC_CORE
+    ---help---
+    This starts with a heavy task on big domain however the task priority is
+    modified mid way through execution below cutoff, but no migration happens. The
+    task gets the CPU immediately.
+
+
+config SCHED_BASIC_CORE_CORE_TEST_SCN03_2A
+    bool "core_test_scn03.2a"
+    default y
+    depends on SCHED_BASIC_CORE
+    ---help---
+    This starts with a heavy task however the task priority is modified mid way
+    through execution below cutoff. Since the big domain is oversubscribed, the
+    task stays on little domain
+
+
+config SCHED_BASIC_CORE_CORE_TEST_SCN04_1
+    bool "core_test_scn04.1"
+    default y
+    depends on SCHED_BASIC_CORE
+    ---help---
+    This starts with a heavy task on big domain without any specific CPU
+    affinity defined. However the task’s CPU affinity is modified mid way
+    through execution to little domain CPU forcing a migration to Little
+    domain.  The task gets the CPU immediately.
+
+
+config SCHED_BASIC_CORE_CORE_TEST_SCN04_2
+    bool "core_test_scn04.2"
+    default y
+    depends on SCHED_BASIC_CORE
+    ---help---
+    This starts with a light task on little domain without any specific CPU
+    affinity defined. However the task’s CPU affinity is modified mid way
+    through execution to big domain. The task moves to the run queue.
+

@@ -1,0 +1,13 @@
+[[test_FT0000]]
+==== "FT0000" Test Case
+
+.Goal
+This test suite has the aim to assert that the scheduler has big.LITTLE MP support
+
+.Detailed Description
+This test case checks if the big.LITTLE MP scheduling support for the ARM architecture is
+available in the target kernel.
+
+.Expected Behavior
+The scheduler has big.LITTLE MP Support.
+

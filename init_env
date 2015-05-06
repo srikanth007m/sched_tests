@@ -1,0 +1,14 @@
+# ShedTest Shell: the big.LITTLE Scheduler Test Shell
+SHELL=$(cat /proc/$$/cmdline)
+if [[ $SHELL == *"bash"* ]]; then
+    source build/configuration/schedtest_shell
+else
+	echo "The SchedTest shell requires a BASH shell"
+	echo "Source this shell configuratio from a terminal running BASH."
+    echo
+fi
+
+
+
+
+# vim: set tabstop=4:

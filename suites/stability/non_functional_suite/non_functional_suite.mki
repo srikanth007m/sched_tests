@@ -1,0 +1,41 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+ifdef CONFIG_SCHED_STABILITY_NONFUNCTIONAL
+
+SUITES     += non_functional_suite
+SUITES_DIR += suites/stability/non_functional_suite
+
+install_suites: install_suite_non_functional install_suite_non_functional_testcases
+clean_suites: clean_suite_non_functional
+
+install_suite_non_functional:
+	@echo "Installing suite $(INSTALL_DIR)/suites/non_functional..."
+	@mkdir -p $(INSTALL_DIR)/suites/non_functional/testcases
+	@cd suites/stability/non_functional_suite && \
+		cp -R common/* \
+		$(INSTALL_DIR)/suites/non_functional
+
+include ./suites/stability/non_functional_suite/testcases.mki
+
+clean_suite_non_functional:
+	@echo "Remove suite $(INSTALL_DIR)/suites/non_functional..."
+	@rm -rf $(INSTALL_DIR)/suites/non_functional
+
+.PHONY: install_suite_non_functional clean_suite_non_functional
+
+endif # CONFIG_SCHED_STABILITY_NONFUNCTIONAL
+

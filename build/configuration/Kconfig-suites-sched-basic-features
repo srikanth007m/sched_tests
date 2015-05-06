@@ -1,0 +1,3 @@
+source "suites/sched/hmp_02_basic_features/core_suite/Kconfig"
+source "suites/sched/hmp_02_basic_features/extended_suite/Kconfig"
+source "suites/sched/hmp_02_basic_features/usecases_suite/Kconfig"

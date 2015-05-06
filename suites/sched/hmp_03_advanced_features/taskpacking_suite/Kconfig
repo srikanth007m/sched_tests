@@ -1,0 +1,18 @@
+
+menuconfig SCHED_ADVANCED_TASKPACKING
+    bool "Small task packing feature"
+    default n
+    select COMPONENT_FUNCTESTLIB_SH
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within taskpacking_suite is to validate
+    the functional behaviour of small task packing feature.
+
+config SCHED_ADVANCED_TASKPACKING_PACK_SINGLE_CPU
+    bool "pack_single_cpu"
+    default y
+    depends on SCHED_ADVANCED_TASKPACKING
+    ---help---
+    Use light load generating threads to confirm that all the light weight
+    threads are packed on to a single little CPU
+

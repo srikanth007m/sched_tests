@@ -1,0 +1,12 @@
+[[test_004_check_devfreq_cooling]]
+==== 004_check_devfreq_cooling
+
+.Goal
+The goal of this test is to check if the devfreq cooling device(s) have been
+instantiated properly
+
+.Expected Behavior
+JUNO is expected to have one devfreq cooling device for the GPU
+
+.Possible Issues
+This test is not expected to fail

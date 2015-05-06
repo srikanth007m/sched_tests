@@ -1,0 +1,73 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+install_suite_pmu_testcases:
+	@echo "Installing testcases..."
+ifdef CONFIG_PLATFORM_PMU_PMU_CCI_TEST_SCN09
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_cci_test_scn09 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_CCI_TEST_SCN09
+
+ifdef CONFIG_PLATFORM_PMU_PMU_CCI_TEST_SCN10
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_cci_test_scn10 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_CCI_TEST_SCN10
+
+ifdef CONFIG_PLATFORM_PMU_PMU_CCI_TEST_SCN11
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_cci_test_scn11 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_CCI_TEST_SCN11
+
+ifdef CONFIG_PLATFORM_PMU_PMU_TEST_SCN01
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_test_scn01 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_TEST_SCN01
+
+ifdef CONFIG_PLATFORM_PMU_PMU_TEST_SCN02
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_test_scn02 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_TEST_SCN02
+
+ifdef CONFIG_PLATFORM_PMU_PMU_TEST_SCN03
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_test_scn03 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_TEST_SCN03
+
+ifdef CONFIG_PLATFORM_PMU_PMU_TEST_SCN04
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_test_scn04 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_TEST_SCN04
+
+ifdef CONFIG_PLATFORM_PMU_PMU_TEST_SCN05
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_test_scn05 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_TEST_SCN05
+
+ifdef CONFIG_PLATFORM_PMU_PMU_TEST_SCN06
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_test_scn06 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_TEST_SCN06
+
+ifdef CONFIG_PLATFORM_PMU_PMU_TEST_SCN07
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_test_scn07 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_TEST_SCN07
+
+ifdef CONFIG_PLATFORM_PMU_PMU_TEST_SCN08
+	@cd ./suites/platform/pmu_suite && \
+	 cp -R testcases/pmu_test_scn08 $(INSTALL_DIR)/suites/pmu/testcases/
+endif # pmu_suite_PMU_TEST_SCN08
+

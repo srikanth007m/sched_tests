@@ -1,0 +1,30 @@
+[[test_extd_test_scn03.2a]]
+==== extd_test_scn03.2a
+
+.Goal
+Verify down migration of a task once the big domain is over subscribed
+
+.Detailed Description
+This test starts with a heavy task running on the Big domain which is then
+subject to a decrease of its load, CPU demand. But since no Idle CPU is
+available and the big Domain is oversubscribed, the expected behavior is that
+the big.LITTLE MP scheduler extensions move the task to a CPU of the LITTLE
+domain.
+
+.Expected Behavior
+The expected behavior is reported in the following figure:
+
+image::images/extended/extd_test_scn03.2a.png[align="center"]
+
+1. The task library generates initially a heavy load starting on big domain.
+2. The CPU affinity is not set at this point. The priority of the task is
+   < cut-off priority.
+3. The task sheds down more load due to idling but the Big domain is
+   over subscribed.
+4. Hence a forced task migration happens moving the now low
+   task to a CPU of the LITTLE domain.
+
+.Possible Issues
+
+. idle CPU being available at the point of migration
+

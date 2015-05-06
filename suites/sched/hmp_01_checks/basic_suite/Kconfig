@@ -1,0 +1,106 @@
+
+menuconfig SCHED_CHECK
+    bool "Key kernel configuration options"
+    default n
+    select COMPONENT_FUNCTESTLIB_SH
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within basic_suite is to validate and
+    confirm the basic integration of big.LITTLE MP patches. The intend of the test
+    design was to assert the specification of key kernel configurations or
+    attributes as needed by big.LITTLE MP patches.
+
+config SCHED_CHECK_BASICCHECK
+    bool "basiccheck"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Use heavy and light load generating threads to confirm that high load
+    threads go to 'fast' CPUs and low load threads go to 'slow' CPUs using the
+    HMP scheduler patches
+
+
+config SCHED_CHECK_FT0000
+    bool "FT0000"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Assert that the kernel has HMP support
+
+
+config SCHED_CHECK_FT0001
+    bool "FT0001"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Assert that the scheduler has a CPU-level domain covering all CPUs
+
+
+config SCHED_CHECK_FT0002
+    bool "FT0002"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Assert that load balancing is turned off on the scheduler's CPU-level sched
+    domain
+
+
+config SCHED_CHECK_FT0003
+    bool "FT0003"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Assert that the scheduler has a package level (MC) domain covering the
+    reported siblings for each CPU
+
+
+config SCHED_CHECK_FT0004
+    bool "FT0004"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Assert that the scheduler has load balancing turned on at the package level
+    (MC) domains
+
+
+config SCHED_CHECK_FT0007
+    bool "FT0007"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Assert that the test framework's calculation of 'fast' CPUs are all A15s
+
+
+config SCHED_CHECK_FT0008
+    bool "FT0008"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Assert that all CPUs in the package domain for 'fast' CPUs are A15s
+
+
+config SCHED_CHECK_FT0011
+    bool "FT0011"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Assert that the test framework's calculation of slow CPUs contains only A7
+    cores
+
+
+config SCHED_CHECK_FT0012
+    bool "FT0012"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Assert that all little CPUs are in a sched domain with only other little
+    CPUs
+
+
+config SCHED_CHECK_FT0013
+    bool "FT0013"
+    default y
+    depends on SCHED_CHECK
+    ---help---
+    Assert that the scheduler no longer prints fast/slow CPUs during boot
+

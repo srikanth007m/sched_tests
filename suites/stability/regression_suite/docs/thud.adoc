@@ -1,0 +1,36 @@
+[[test_thud]]
+==== thud
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+Skips occur when more than one interactive task starts to become a CPU hog. The
+test case tries to reproduce this by creating a number of tasks which alternate
+between being 'interactive' and CPU hogs.
+
+The thud program is a short piece of code written to allow other kernel
+developers to reliably reproduce a specific problem with the scheduler - that
+is, when only a small number of maximally interactive tasks suddenly become CPU
+hogs they were able to starve most other processes for several seconds.
+
+1. After initialization of some memory for doing memcopy operations as a CPU
+bound task the main process forks user specified number of child processes.
+each of the child processes puts themselves to the back of the scheduler Q with
+a sched_yield call.
+
+2. After this every process would sleep for 10.5 sec followed by a memcopy
+operation for about 6 seconds. This activity is repeated for 10 times.
+
+The parent waits to kill the children while the children are busy looping never
+giving a chance to the parent.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

@@ -1,0 +1,1 @@
+source "suites/ipa/functional_suite/Kconfig"

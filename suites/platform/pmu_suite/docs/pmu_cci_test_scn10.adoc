@@ -1,0 +1,24 @@
+[[test_pmu_cci_test_scn10]]
+==== pmu_cci_test_scn10
+
+.Goal
+The aim of this test System wide counting for CCI events when test scenario is
+run in MP mode and the counters are grouped.
+
+.Detailed Description
+This tests CCI PMU by running cache on big CPU and counting cacheable reads and
+write evict transactions on the big CPU.
+
+1. The cache program is set for the system to count Read request - cache
+   maintenance, Write request any, Write request stall -  barrier hazard
+2. Perf is calculated for the grouped mode events occured
+3. Confirm if the cache references, misses are matching with the perf results.
+
+
+.Expected Behavior
+The expected result is that the counters keep correct counting across all the
+CPUs in the systems.
+
+.Possible Issues
+This test is not expected to fail.
+

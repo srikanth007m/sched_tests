@@ -1,0 +1,51 @@
+
+menuconfig SCHED_ADVANCED_SCALEINVARIANCE
+    bool "Scale invariance support"
+    default n
+    select COMPONENT_PLATFORM_SH
+    select COMPONENT_TASKSET
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within scaleinvariance_suite is to validate
+    behaviour of scale invariance support for scheduler in a big.LITTLE system.
+
+config SCHED_ADVANCED_SCALEINVARIANCE_SCALINV_TEST_0001
+    bool "scalinv_test_0001"
+    default y
+    depends on SCHED_ADVANCED_SCALEINVARIANCE
+    ---help---
+    Check if we can turn scale invariance on and off
+
+
+config SCHED_ADVANCED_SCALEINVARIANCE_SCALINV_TEST_0002
+    bool "scalinv_test_0002"
+    default y
+    depends on SCHED_ADVANCED_SCALEINVARIANCE
+    ---help---
+    Check for presence of userspace governor in kernel
+
+
+config SCHED_ADVANCED_SCALEINVARIANCE_SCALINV_TEST_0003
+    bool "scalinv_test_0003"
+    default y
+    depends on SCHED_ADVANCED_SCALEINVARIANCE
+    ---help---
+    Without scale invariance, change the freq every 1s and check that the
+    runnable ratio remains unchanged
+
+
+config SCHED_ADVANCED_SCALEINVARIANCE_SCALINV_TEST_0004
+    bool "scalinv_test_0004"
+    default y
+    depends on SCHED_ADVANCED_SCALEINVARIANCE
+    ---help---
+    Without invariance, check that the frequency changes at each step
+
+
+config SCHED_ADVANCED_SCALEINVARIANCE_SCALINV_TEST_0005
+    bool "scalinv_test_0005"
+    default y
+    depends on SCHED_ADVANCED_SCALEINVARIANCE
+    ---help---
+    With scale invariance on, check scale matches freq
+

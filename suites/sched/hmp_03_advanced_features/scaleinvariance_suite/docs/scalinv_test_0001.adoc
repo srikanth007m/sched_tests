@@ -1,0 +1,29 @@
+[[test_scalinv_test_0001]]
+==== scalinv_test_0001
+
+.Goal
+Checks if scale invariance can be turned on and off
+
+.Detailed Description
+This test asserts the usage of load as a representation of the amount of
+*POTENTIAL* CPU compute capacity used, as opposed to +CURRENT+ CPU compute
+capacity.
+
+cpufreq is responsible for scale invariance management.  If CPUFreq is enabled,
+scales load in accordance with frequency.
+
+Different governors like Powersave / performance / ondemand / interactive/
+userspace +CPUFreq governors+ are available.
+
+The governors and CPUFreq subsystem should correctly report the frequencies
+available.
+
+The debug interfaces used to get these information is
++/sys/kernel/hmp/scale_invariant_load+ and
++/sys/devices/system/cpu/cpu0/topology/enable_scaled_cpupower+.
+
+This test checks whether the prototype feature of CPU-power based scale and
+frequency invariance is present or not and whether it is controllable or not.
+
+.Possible Issues
+This test is not expected to fail.

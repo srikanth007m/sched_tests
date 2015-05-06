@@ -1,0 +1,6 @@
+config COMPONENT_TESTRUNNER
+	bool 'testrunner'
+	default y
+	select COMPONENT_TESTRUNNER_LAUNCHER
+	---help---
+	Deploy the testrunner component

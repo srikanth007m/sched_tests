@@ -1,0 +1,3 @@
+source "suites/sched/hmp_03_advanced_features/loadbalance_suite/Kconfig"
+source "suites/sched/hmp_03_advanced_features/scaleinvariance_suite/Kconfig"
+source "suites/sched/hmp_03_advanced_features/taskpacking_suite/Kconfig"

@@ -1,0 +1,5 @@
+config COMPONENT_PMU_ASSETS
+	bool 'pmu_assets'
+	default n
+	---help---
+	Deploy the pmu_assets component

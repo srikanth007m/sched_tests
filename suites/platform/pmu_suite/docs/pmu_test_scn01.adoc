@@ -1,0 +1,31 @@
+[[test_pmu_test_scn01]]
+==== pmu_test_scn01
+
+.Goal
+The aim of this test is to validate the correct event counting on a per-process
+basis in MP configuration where the task is forced to migrate across clusters
+multiple times.
+
+.Detailed Description
+The task characteristic would be with more CPU intensive operations to force
+the CPU cycle counting and instruction counting, including some idle time.
+
+1. The cycles program is set for per process counting for counting CPU cycles
+   and instructions.
+2. Perf is calculated for the non-grouped user mode events occured
+3. Confirm if the CPU cycles and instructions generated are matching
+   with the perf results.
+
+The variants of this test case could be done where the scenarios with a single
+task which is being monitored OR with multiple tasks where the runQ residency
+of the monitored task is more.
+
+.Expected Behavior
+The expected result is that the counters keep correct counting against the
+monitored process, irrespective of the CPU where the monitored process is
+migrated to across big/little clusters.
+
+.Possible Issues
+
+. perf might sometimes throw 'too many open files' error
+

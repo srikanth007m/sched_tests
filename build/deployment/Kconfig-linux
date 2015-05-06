@@ -1,0 +1,28 @@
+
+
+################################################################################
+# Linux deployment options (via SSH)
+
+comment "SSH Configuration"
+
+config TARGET_IP_ADDRESS
+  string "IP Address"
+  default "10.2.131.122"
+  depends on TARGET_LINUX
+
+config TARGET_USERNAME
+  string "Target username"
+  default "linaro"
+  ---help---
+  Name of the user to log in to the target Linux device.
+
+config TARGET_SSH_KEY
+  string "Target SSH key"
+  default ""
+  ---help---
+  SSH key to login to the Linux device target.
+
+  If no key is specified or the key is invalid, the deployment procedure will
+  fall back to the supervised login from the command line.
+  The key should be put under the build/deployment/linux folder.
+

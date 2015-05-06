@@ -1,0 +1,43 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+install_suite_scaleinvariance_testcases:
+	@echo "Installing testcases..."
+ifdef CONFIG_SCHED_ADVANCED_SCALEINVARIANCE_SCALINV_TEST_0001
+	@cd ./suites/sched/hmp_03_advanced_features/scaleinvariance_suite && \
+	 cp -R testcases/scalinv_test_0001 $(INSTALL_DIR)/suites/scaleinvariance/testcases/
+endif # scaleinvariance_suite_SCALINV_TEST_0001
+
+ifdef CONFIG_SCHED_ADVANCED_SCALEINVARIANCE_SCALINV_TEST_0002
+	@cd ./suites/sched/hmp_03_advanced_features/scaleinvariance_suite && \
+	 cp -R testcases/scalinv_test_0002 $(INSTALL_DIR)/suites/scaleinvariance/testcases/
+endif # scaleinvariance_suite_SCALINV_TEST_0002
+
+ifdef CONFIG_SCHED_ADVANCED_SCALEINVARIANCE_SCALINV_TEST_0003
+	@cd ./suites/sched/hmp_03_advanced_features/scaleinvariance_suite && \
+	 cp -R testcases/scalinv_test_0003 $(INSTALL_DIR)/suites/scaleinvariance/testcases/
+endif # scaleinvariance_suite_SCALINV_TEST_0003
+
+ifdef CONFIG_SCHED_ADVANCED_SCALEINVARIANCE_SCALINV_TEST_0004
+	@cd ./suites/sched/hmp_03_advanced_features/scaleinvariance_suite && \
+	 cp -R testcases/scalinv_test_0004 $(INSTALL_DIR)/suites/scaleinvariance/testcases/
+endif # scaleinvariance_suite_SCALINV_TEST_0004
+
+ifdef CONFIG_SCHED_ADVANCED_SCALEINVARIANCE_SCALINV_TEST_0005
+	@cd ./suites/sched/hmp_03_advanced_features/scaleinvariance_suite && \
+	 cp -R testcases/scalinv_test_0005 $(INSTALL_DIR)/suites/scaleinvariance/testcases/
+endif # scaleinvariance_suite_SCALINV_TEST_0005
+

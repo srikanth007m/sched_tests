@@ -1,0 +1,2 @@
+* <<suite_non_functional,non_functional>>
+* <<suite_regression,regression>>

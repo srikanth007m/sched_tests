@@ -1,0 +1,73 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+install_suite_basic_testcases:
+	@echo "Installing testcases..."
+ifdef CONFIG_SCHED_CHECK_BASICCHECK
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/basiccheck $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_BASICCHECK
+
+ifdef CONFIG_SCHED_CHECK_FT0000
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/FT0000 $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_FT0000
+
+ifdef CONFIG_SCHED_CHECK_FT0001
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/FT0001 $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_FT0001
+
+ifdef CONFIG_SCHED_CHECK_FT0002
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/FT0002 $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_FT0002
+
+ifdef CONFIG_SCHED_CHECK_FT0003
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/FT0003 $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_FT0003
+
+ifdef CONFIG_SCHED_CHECK_FT0004
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/FT0004 $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_FT0004
+
+ifdef CONFIG_SCHED_CHECK_FT0007
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/FT0007 $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_FT0007
+
+ifdef CONFIG_SCHED_CHECK_FT0008
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/FT0008 $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_FT0008
+
+ifdef CONFIG_SCHED_CHECK_FT0011
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/FT0011 $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_FT0011
+
+ifdef CONFIG_SCHED_CHECK_FT0012
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/FT0012 $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_FT0012
+
+ifdef CONFIG_SCHED_CHECK_FT0013
+	@cd ./suites/sched/hmp_01_checks/basic_suite && \
+	 cp -R testcases/FT0013 $(INSTALL_DIR)/suites/basic/testcases/
+endif # basic_suite_FT0013
+

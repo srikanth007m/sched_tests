@@ -1,0 +1,5 @@
+config COMPONENT_HWBREAKPOINT_ASSETS
+	bool 'hwbreakpoint_assets'
+	default n
+	---help---
+	Deploy the hwbreakpoint_assets component

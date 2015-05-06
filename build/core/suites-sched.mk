@@ -1,0 +1,9 @@
+-include suites/sched/hmp_01_checks/basic_suite/basic_suite.mki
+-include suites/sched/hmp_01_checks/irqs_suite/irqs_suite.mki
+-include suites/sched/hmp_01_checks/thresholds_suite/thresholds_suite.mki
+-include suites/sched/hmp_02_basic_features/core_suite/core_suite.mki
+-include suites/sched/hmp_02_basic_features/extended_suite/extended_suite.mki
+-include suites/sched/hmp_02_basic_features/usecases_suite/usecases_suite.mki
+-include suites/sched/hmp_03_advanced_features/loadbalance_suite/loadbalance_suite.mki
+-include suites/sched/hmp_03_advanced_features/scaleinvariance_suite/scaleinvariance_suite.mki
+-include suites/sched/hmp_03_advanced_features/taskpacking_suite/taskpacking_suite.mki

@@ -1,0 +1,5 @@
+config COMPONENT_PLATFORM_SH
+	bool 'platform.sh'
+	default n
+	---help---
+	Deploy the platform.sh component

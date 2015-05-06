@@ -1,0 +1,8 @@
+
+Pending Features
+----------------
+
+.:: Development
+- use platform-versioned binary components
+- show specific testcase trace via Kernelshark when available
+- hide components Kconfig menu

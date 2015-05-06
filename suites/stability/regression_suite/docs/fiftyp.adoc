@@ -1,0 +1,36 @@
+[[test_fiftyp]]
+==== fiftyp
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+The test validates the scheduler behaviour when the CPU is running tasks, the
+CPU is oscillating between 50% load and idle periods.
+
+The test forks 2 separate child process. In both these processes it calls in an
+infinite loop which invokes a 'compute' task for loops equivalent to 7000 usec
+(7 msec) followed by 'idle' task for equivalent of 7000 usec (7 msec).
+
+To produce 7msec equivalent of load, It uses burn_loops method to simply
+increment in a loop with a compiler inline directive not to reorder
+instructions as part of any optimisation. This loop is calibrated to 1%
+tolerance and the load per msec for the CPU is calculated in terms of the
+loops.
+
+In the loop we try to benchmark how many meaningless loops per second we can
+perform on this hardware to fairly accurately reproduce certain percentage cpu
+usage
+
+This is called a 50% test where 50% of time there is a CPU load and for the
+rest there is CPU idle period.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+vanilla scheduler.
+
+.Possible Issues
+This test is not expected to fail.

@@ -1,0 +1,18 @@
+
+comment "Platform Checks"
+source "build/configuration/Kconfig-suites-platforms"
+
+comment "Scheduler Integration Checks"
+source "build/configuration/Kconfig-suites-sched-checks"
+
+comment "Scheduler Basic Functions Checks"
+source "build/configuration/Kconfig-suites-sched-basic-features"
+
+comment "Scheduler Advanced Functions Checks"
+source "build/configuration/Kconfig-suites-sched-advanced-features"
+
+comment "System Stability Checks"
+source "build/configuration/Kconfig-suites-stability"
+
+comment "IPA Functional Checks"
+source "build/configuration/Kconfig-suites-ipa"

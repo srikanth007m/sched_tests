@@ -1,0 +1,55 @@
+[[test_tenp]]
+==== tenp
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+The aim of the test is to validate scheduler behaviour where there is a 10%
+load distribution between different processes.
+
+This is like fiftyp except that it is for load of 10%.
+
+1. Test starts by calibrating the CPU load characteristics on the platform. It
+uses burn_loops method to simply increment in a loop with a compiler inline
+directive not to reorder instructions as part of any optimisation.
+
+2. Start with assumption of 10^6 loops possible to execute in a millisecond
+(Assuming that if the clock speed is 1 GHz it could run 10^9 instructions in a
+second and hence this initial assumption of 10^6 instructions for a msec).
+
+3. In a loop execute this initial 10^6 instructions, Time the execution in nsec
+and compute the actual number of instructions (rather loops) that was actually
+executed in 1 msec. The number of loops (load) required to acheive a 1 msec
+execution time is computed within a tolerance of 1%.
+
+4. After some sleep this load for 1 msec execution is again recomputed one more
+time within a 5% tolerance of 1 msec execution time. However this time the
+number of loops is not changed if fallen within the tolerance. Else the whole
+calibration is repeated with the current number of computed loop.
+
+5. After some sleep compute the runtime duration for 1 msec. Also calibrate the
+time for 1 msec sleep duration.
+
+6. At this point calibration ends. What we get at the end of calibration is the
+following a. Calibrated number of loops required for executing a 1 msec task b.
+Calibrate runtime for 1 msec load c. Calibrated time for 9 msec sleep
+
+7. After calibration is done, the test forks 14 separate child process. In all
+the 14 processes it calls in an infinite loop which invokes a 'compute' task
+for loops equivalent to 1 msec followed by 'idle' task for equivalent of 9
+msec.
+
+Since each of the process has a 1 msec 'load' followed by 9 msec sleep window,
+with sufficient number of competing processes there is a 1 + 9 = 10 windows of
+opportunity for schedule to schedule between threads.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

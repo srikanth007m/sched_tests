@@ -1,0 +1,5 @@
+sched-tests (0.2~ppa1) precise; urgency=low
+
+  * Initial release
+
+ -- Riku Voipio <riku.voipio@linaro.org>  Wed, 16 May 2012 10:21:22 +0300

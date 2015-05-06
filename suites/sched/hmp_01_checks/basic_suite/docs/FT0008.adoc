@@ -1,0 +1,19 @@
+[test_FT0008]]
+==== "FT0008" Test Case
+
+.Goal
+This test suite has the aim to Assert that all CPUs in the package domain for
+'fast' CPUs are big CPUs.
+
+.Detailed Description
+All big CPUs take part in a sched domain populated entirely by other big CPUs.
+The Big CPUs calculated by getting the CPU list through +/proc/cpuinfo+. The Big
+CPU list is got through the Big core ID match from the above list. The CPU
+Sched domain list is also populated. This list is got by +/proc/schedstat+ and
+the bitfields/cpumask of the the CPUs covering this domain is populated in the
+list. The big CPUs in the same domain are all fast CPUs.
+
+.Expected Behavior
+All the big CPUs in the populated lists are same as the list in the sched
+domain list.
+

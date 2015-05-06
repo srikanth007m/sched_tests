@@ -1,0 +1,73 @@
+
+function _schedtest-color_result {
+LINE=$1
+# "Suite"  => Suite header
+if [[ "$LINE" == "=== Suite"* ]]; then
+  LINE="${STSHELL_PURPLE}$1${STSHELL_DEFAULT}"
+fi
+# "pass"   => lowercase green
+LINE="${LINE/ pass / ${STSHELL_GREEN}pass${STSHELL_DEFAULT} }";
+# "fail"   => UPPERCASE red
+LINE="${LINE/ fail / ${STSHELL_RED}FAIL${STSHELL_DEFAULT} }";
+# "Ratio"  => yellow
+#LINE="${LINE/ Ratio: / ${STSHELL_YELLOW}Ratio${STSHELL_DEFAULT}: }";
+}
+
+function schedtest-results {
+OUT=${1:-'out'}
+if [[ ! -f $OUT/results.txt ]]; then
+  echo
+  echo -ne "${STSHELL_PURPLE}";
+  echo -e  "No results available";
+  echo -e  "Run tests and pull them from target before executing this command";
+  echo -ne "${STSHELL_DEFAULT}";
+  echo
+  return
+fi
+cat $OUT/results.txt | while read LINE; do
+  _schedtest-color_result "$LINE"
+  echo -e $LINE
+  if [[ $LINE == *"=== Suite"* ]]; then
+    SUITE_NAME=`echo $LINE | awk '{print $3}' | tr -d '['`
+	SUITE=${SUITE_NAME/_suite/}
+  fi
+  if [[ $LINE == *"FAIL"* ]]; then
+    TESTCASE=`echo $LINE | awk '{print $2}'`
+    printf '  Reference: file:///%s/docs/index.html#test_%s\n' "`pwd`" "${TESTCASE}"
+    printf '  Detailed testcase report on:\n'
+    ls out/suites/${SUITE}/testcases/${TESTCASE}/*.res | \
+    while read REPORT; do
+      printf '    %s\n' "$REPORT"
+    done
+  fi
+done
+echo
+}
+
+TIME_REGEXP="([0-9]{1,2})-([0-9]{1,2})-([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})-([0-9]{1,2})"
+function _schedtest-getresults {
+OUT=${1:-'out'}
+
+echo > $OUT/results.txt
+
+RESULTS=$(find $OUT/ -maxdepth 3 -name "*.res")
+for FILE in $RESULTS; do
+  DIR_OUT=$(dirname $FILE)
+  SUITE_NAME=${DIR_OUT/$OUT\/suites\/}
+  SUITE=${SUITE_NAME}_suite
+  DIR_SRC=$(find suites/ -name ${SUITE})
+  TIMESTAMP=$(echo $FILE | \
+    sed -r "s|.*_${TIME_REGEXP}.res|\3-\2-\1 \4:\5:\6|g")
+  echo >> $OUT/results.txt
+  echo -e  "=== Suite [${SUITE} @ ${TIMESTAMP}]" | tee >> $OUT/results.txt
+  cat $FILE | while read LINE; do
+    [[ $LINE == *"Suite Name"* ]] && continue
+    [[ $LINE == *"Number of"* ]] && continue
+    read -a LINE_ARRAY <<< "$LINE"
+    printf "%s %-24s %s %s %s %s %s\n" $LINE | tee >> $OUT/results.txt
+  done
+done
+schedtest-results "$OUT"
+}
+
+# vim: set tabstop=4:

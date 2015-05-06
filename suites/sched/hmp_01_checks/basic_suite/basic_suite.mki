@@ -1,0 +1,41 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+ifdef CONFIG_SCHED_CHECK
+
+SUITES     += basic_suite
+SUITES_DIR += suites/sched/hmp_01_checks/basic_suite
+
+install_suites: install_suite_basic install_suite_basic_testcases
+clean_suites: clean_suite_basic
+
+install_suite_basic:
+	@echo "Installing suite $(INSTALL_DIR)/suites/basic..."
+	@mkdir -p $(INSTALL_DIR)/suites/basic/testcases
+	@cd suites/sched/hmp_01_checks/basic_suite && \
+		cp -R common/* \
+		$(INSTALL_DIR)/suites/basic
+
+include ./suites/sched/hmp_01_checks/basic_suite/testcases.mki
+
+clean_suite_basic:
+	@echo "Remove suite $(INSTALL_DIR)/suites/basic..."
+	@rm -rf $(INSTALL_DIR)/suites/basic
+
+.PHONY: install_suite_basic clean_suite_basic
+
+endif # CONFIG_SCHED_CHECK
+

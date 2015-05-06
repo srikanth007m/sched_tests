@@ -1,0 +1,27 @@
+[[test_migrate_time]]
+==== migrate_time
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present with
+or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+This test checks if the migration happen over time when the affinity is changed
+to certain CPUs.
+
+In a Do While loop, current time is calculated and assigned to last. Previous
+time is kept track in the previous loop. This loop is executed till difference
+between the start time and the current time is less than the number of seconds
+specified for migration. In this loop,everytime the loop enters, the +CPU+ is
+switched to +CPU+1+,  that is the next CPU until max number of CPUs are
+covered.  Hence migration happens over time to different CPUs till the number
+of seconds specified pass.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

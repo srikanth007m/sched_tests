@@ -1,0 +1,21 @@
+
+menuconfig PLATFORM_HW_BREACKPOINTS
+    bool "HW breackpoints"
+    default n
+    depends on !TARGET_JUNO
+    depends on !TARGET_ODROID_3XU
+    select COMPONENT_HWBREAKPOINT_ASSETS
+    select COMPONENT_TASKSET
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within hwbreakpoint_suite is to validate
+    ability of hardware breakpoints to survive power down sequences in a
+    big.LITTLE system.
+
+config PLATFORM_HW_BREACKPOINTS_HWBP_TEST_01
+    bool "hwbp_test_01"
+    default y
+    depends on PLATFORM_HW_BREACKPOINTS
+    ---help---
+    Test that using hw breakpoints over powerdown is possible.
+

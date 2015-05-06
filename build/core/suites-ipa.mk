@@ -1,0 +1,1 @@
+-include suites/ipa/functional_suite/functional_suite.mki

@@ -1,0 +1,5 @@
+config COMPONENT_TRACE_CMD
+	bool 'trace-cmd'
+	default n
+	---help---
+	Deploy the trace-cmd component

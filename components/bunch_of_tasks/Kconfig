@@ -1,0 +1,5 @@
+config COMPONENT_BUNCH_OF_TASKS
+	bool 'bunch_of_tasks'
+	default n
+	---help---
+	Deploy the bunch_of_tasks component

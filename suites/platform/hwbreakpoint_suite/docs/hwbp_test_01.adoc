@@ -1,0 +1,27 @@
+[[test_hwbp_test_01]]
+==== hwbp_test_01
+
+.Goal
+This tests that using hw breakpoints over powerdown is possible.
+
+.Detailed Description
+This test checks if the hardware breakpoint can be applied to tasks. The test
+makes use of the taskset library to get the CPU mask and adds hardware
+breakpoint/watchpoint support for the arm-linux-gnueabi target to gdbserver
+through breakpoint_test program.
+
+A process is forked to form parent and child.
+
+1. The child program launches tests which sets up break point traps in Dummy
+   Functions and waits for the signal SIGTRAP which comes from the gdb. Once
+   this comes, it enables a memory in the main program and exits.
+2. The parent tests if the test id launched and tests if the traps are set. It
+   calls the Dummy functions where dummy functions were set. If the Memory in
+   the main program is enabled, results are sent as passed.
+
+.Expected Behavior
+The expected result is that hardware breakpoints is supported
+
+.Possible Issues
+This test is not expected to fail.
+

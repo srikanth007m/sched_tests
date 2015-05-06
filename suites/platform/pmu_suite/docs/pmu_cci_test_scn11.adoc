@@ -1,0 +1,26 @@
+[[test_pmu_cci_test_scn11]]
+==== pmu_cci_test_scn11
+
+.Goal
+The aim of this is to test CCI PMU by running cache program on big CPUs and
+counting events in sampling mode. This is done by not grouping the events and
+specifying more events than counters. The testcase checks that the extrapolated
+value returned is within range of the golden run.
+
+.Detailed Description
+1. The cache program is set for the system to count Read request shareable
+   only, Read data from snoop, Read request cache maintenance, Write request
+   any, write request stall -  barrier hazard
+2. Hotplug OFF the CPU
+3. Perf is calculated for the events occured
+4. Hotplug ON the CPU
+5. Confirm if the cache read/write requests, cache maintainance, are matching
+   with the perf results
+
+.Expected Behavior
+The expected result is that the counters keep correct counting across all the
+CPUs in the systems.
+
+.Possible Issues
+This test is not expected to fail.
+

@@ -1,0 +1,18 @@
+[[test_FT0011]]
+==== "FT0011" Test Case
+
+.Goal
+Assert that the test framework's calculation of slow CPUs contains only A7
+cores those cores considered as part of LITTLE cluster in the platform. For TC2
+this is A7 cores.
+
+.Detailed Description
+The LITTLE CPUs calculated by getting the CPU list through +/proc/cpuinfo+. The
+CPU siblings lists is also populated for each CPU. The LITTLE CPU list is
+obtained through the A7 core ID match from the above list. If any of the LITTLE
+CPUs differ in their IDs then the test fails.
+
+.Expected Behavior
+If all the CPUs in the populated lists are same as the ID given in the FT0011
+test suite, then, the test goes to the passed state.
+

@@ -1,0 +1,101 @@
+
+menuconfig SCHED_BASIC_EXTENDED
+    bool "Boundary conditions"
+    default n
+    select COMPONENT_BASICS_SH
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within extended_suite is to validate
+    some of the boundary conditions related to the functional behaviour of
+    big.LITTLE MP reference patches.
+
+
+config SCHED_BASIC_EXTENDED_EXTD_TEST_SCN01_1
+    bool "extd_test_scn01.1"
+    default y
+    depends on SCHED_BASIC_EXTENDED
+    ---help---
+    This scenario assumes the heavy task is already in big domain however its
+    computed load is decreasing due to the load pattern (due to idling).  The
+    task stays in big domain since the task load has not yet crossed below the
+    down-threshold The runnable task gets CPU immediately.
+
+
+config SCHED_BASIC_EXTENDED_EXTD_TEST_SCN01_2A
+    bool "extd_test_scn01.2a"
+    default y
+    depends on SCHED_BASIC_EXTENDED
+    ---help---
+    The task starts with big domain and moves to the little since the big
+    domain is oversubscribed.
+
+
+config SCHED_BASIC_EXTENDED_EXTD_TEST_SCN01_4
+    bool "extd_test_scn01.4"
+    default y
+    depends on SCHED_BASIC_EXTENDED
+    ---help---
+    This scenario assumes the light task is already in little domain however
+    its computed load is increasing due to the load pattern (due to run queue
+    residency).
+
+    The task stays in little domain since the task load has not yet crossed
+    above the up-threshold.
+
+    The runnable task gets the CPU immediately.
+
+
+config SCHED_BASIC_EXTENDED_EXTD_TEST_SCN03_1
+    bool "extd_test_scn03.1"
+    default y
+    depends on SCHED_BASIC_EXTENDED
+    ---help---
+    This scenario assumes the heavy task is already in big domain however its
+    computed load is decreasing due to the load pattern (due to idling).
+
+    The task stays in big domain since the task load has not yet crossed below
+    the down-threshold. The runnable task gets CPU immediately.
+
+
+config SCHED_BASIC_EXTENDED_EXTD_TEST_SCN03_2A
+    bool "extd_test_scn03.2a"
+    default y
+    depends on SCHED_BASIC_EXTENDED
+    ---help---
+    This scenario assumes the heavy task is already in big domain however its
+    computed load is decreasing due to the load pattern (due to idling). The
+    task moves to the little domain since the big domain is oversubscribed.
+
+
+config SCHED_BASIC_EXTENDED_EXTD_TEST_SCN03_4
+    bool "extd_test_scn03.4"
+    default y
+    depends on SCHED_BASIC_EXTENDED
+    ---help---
+    This scenario assumes the light task is already in little domain however
+    its computed load is increasing due to the load pattern (due to run queue
+    residency). The task stays in little domain eventhough the task load has
+    reached at the down-threshold. The runnable task gets the CPU immediately.
+
+
+config SCHED_BASIC_EXTENDED_EXTD_TEST_SCN04_1
+    bool "extd_test_scn04.1"
+    default y
+    depends on SCHED_BASIC_EXTENDED
+    ---help---
+    This is a light task which started with Big domain due to CPU affinity and
+    despite migration criteria satisfied is continuing on Big domain. The task
+    gets CPU immediately.
+
+
+config SCHED_BASIC_EXTENDED_EXTD_TEST_SCN04_2
+    bool "extd_test_scn04.2"
+    default y
+    depends on SCHED_BASIC_EXTENDED
+    ---help---
+    This is a heavy task which started in big domain due to initial CPU
+    affinity being big cores, however despite due to the load pattern (being in
+    idle) and the computed task load is decreasing below the down threshold,
+    the task continues on Big domain due to CPU affinity. The task gets the CPU
+    immediately.
+

@@ -1,0 +1,42 @@
+[[suite_pmu]]
+=== "PMU" Test Suite
+
+.Goal
+The primary aim of the test cases within pmu_suite is to validate PMU support
+for a big.LITTLE system.
+
+NOTE: The description of this suite uses as a reference a TC2 board, with a
+2big-3LITTLE topology.
+
+To start the execution of just this test:
+[source,bash]
+----
+$ schedtest-run pmu
+----
+
+Following is the list of supported tests
+
+
+include::./pmu_test_scn01.adoc[]
+
+include::./pmu_test_scn02.adoc[]
+
+include::./pmu_test_scn03.adoc[]
+
+include::./pmu_test_scn04.adoc[]
+
+include::./pmu_test_scn05.adoc[]
+
+include::./pmu_test_scn06.adoc[]
+
+include::./pmu_test_scn07.adoc[]
+
+include::./pmu_test_scn08.adoc[]
+
+include::./pmu_cci_test_scn09.adoc[]
+
+include::./pmu_cci_test_scn10.adoc[]
+
+include::./pmu_cci_test_scn11.adoc[]
+
+// vim: set syntax=asciidoc:

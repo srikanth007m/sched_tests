@@ -1,0 +1,20 @@
+[[test_FT0012]]
+==== "FT0012" Test Case
+
+.Goal
+This test suite has the aim to Assert that all CPUs in the package domain for
+'slow' CPUs are LITTLE CPUs.
+
+.Detailed Description
+All LITTLE CPUs take part in a sched domain populated entirely by other LITTLE
+CPUs. The LITTLE CPUs calculated by getting the CPU list through
++/proc/cpuinfo+. The LITTLE CPU list is got through the LITTLE core ID match
+from the above list. The CPU Sched domain list is also populated. This list is
+got by +/proc/schedstat+ and the bitfields/cpumask of the the CPUs covering
+this domain is populated in the list. The LITTLE CPUs in the same domain are
+all LITTLE CPUs.
+
+.Expected Behavior
+All the LITTLE CPUs in the populated lists are same as the list in the sched
+domain list for Slow CPUs.
+

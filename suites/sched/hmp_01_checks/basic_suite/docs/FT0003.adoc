@@ -1,0 +1,21 @@
+[[test_FT0003]]
+==== "FT0003" Test Case
+
+.Goal
+This test suite has the aim to assert that the scheduler has a package level
+(MC) domain covering the reported siblings for each CPU.
+
+.Detailed Description
+The scheduler has an MC domain. There are several default configurations of the
+MC domain. For example, this default MC level configuration sets the
++SD_SHARE_PKG_RESOURCES+ flag to mark the sharing of resources like the cache
+between groups.
+
+The CPU# sched domain (MC) covers the CPU list obtained by querying the debug
+interface. The CPU siblings for the CPU# are listed using
+/sys/devices/system/cpu/cpu#/topology/core_siblings
+
+.Expected Behavior
+That the scheduler has a MC level domain covering the reported siblings for
+each CPU.
+

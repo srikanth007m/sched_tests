@@ -1,0 +1,33 @@
+[[suite_non_functional_suite]]
+=== "Non Functional" Test Suite
+
+.Goal
+The primary aim of the test cases within non_functional_suite is to validate
+the big.LITTLE MP capable kernel's ability to perform in stress scenarios and
+to assess platform stability with the big.LITTLE MP scheduler extensions being
+active.
+
+To start the execution of just this test:
+
+[source,bash]
+----
+$ schedtest-run non_functional
+----
+
+Following is the list of supported tests
+
+
+include::./stability_test_scn03.1.adoc[]
+
+include::./stability_test_scn04.1.adoc[]
+
+include::./stability_test_scn04.2.adoc[]
+
+include::./stability_test_scn05.1.adoc[]
+
+include::./stability_test_scn06.1.adoc[]
+
+include::./stress_test_scn01.1.adoc[]
+
+
+// vim: set syntax=asciidoc:

@@ -1,0 +1,30 @@
+[[test_scalinv_test_005]]
+==== scalinv_test_005
+
+.Goal
+Cheks task load being scaled in line with frequency
+
+.Detailed Description
+This test checks if we manually change the frequencies when the scale
+invariance is enabled, the task load also scales when the frequencies are
+changed at each step.
+
+The following tasks are done to assert the same.
+
+1. Determine Big Little CPUs in the system
+2. Clear existing tasks from LITTLE CPU since we are testing on the LITTLE CPU.
+3. Set Userspace governorns to access them, start task load and move it to
+   LITTLE CPU.
+4. Enable the frequency invariant load scaling
+5. Change the frequencies manually through
++/sys/devices/system/cpu/cpu${TARGET_LITTLE_CPU}/cpufreq/scaling_setspeed+ and
+set the delay to 1ms
+6. Check the traces if the task load has changed in line with the frequency
+   that is changed
+
+Thus, this test checks that the tracked load (after settling) scales is in line
+with the frequency - we have a range of +/- 1 unit because it's not always
+exact
+
+.Possible Issues
+This test is not expected to fail.

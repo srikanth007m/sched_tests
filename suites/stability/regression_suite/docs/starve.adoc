@@ -1,0 +1,35 @@
+[[test_starve]]
+==== starve
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+Starvation is usually caused by an overly simplistic scheduling algorithm. For
+example, if a (poorly designed) multi-tasking system always switches between
+the first two tasks while a third never gets to run, then the third task is
+being starved of CPU time.
+
+The main process forks a child process which keeps on sending a userdefined
+signal to the parent process indefinitely until it is killed by the parent.The
+main/parent process registers the handler for the userdefined signal (which
+gets triggered by the child process) where it decrements a loop counter upon
+which the parent process waits between sleeps. Once the parent process has
+received enough signals from the child process to exit the loop counter it
+explicitly kills the child process and terminates.
+
+Here the test is a poorly designed multi-tasking system where the child is
+always sending signals to the parent.  The child process keep on sending user
+defined signals to the parent process continuously so as to 'starve' the parent
+process of scheduling opportunities to handle the signal and come out of the
+loop.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

@@ -1,0 +1,48 @@
+
+Almost all SchedTest-Shell commands start by "schedtest-", thus using shell
+completion it is easy to get a list of all the available commands.
+
+Thereafter is a list of the main ones, with a short description.
+For a longer description type "schedtest-help <command>"
+
+
+.:: Generic commands
+--------------------
+
+schedtest-help    - Print this help, or command specific helps
+schedtest-docs    - Open SchedTest HTML documenation
+
+schedtest-version - Dump info on the SchedTest in use
+schedtest-shell   - Start a new SchedTest shell terminal
+
+
+.:: Building commands
+---------------------
+
+schedtest-config  - Configure a SchedTest build
+schedtest-install - Build and Install SchedTest suite on target device
+
+schedtest-clean   - Clean SchedTest build
+schedtest-wipe    - Wipe local and remote SchedTest binaries
+schedtest-build   - Build SchedTest suite and install locally
+
+
+.:: Packaging commands
+----------------------
+
+schedtest-package - Build a self-contained deployment package
+schedtest-archive - Build a tarball of the SchedTest binaries
+
+
+.:: Execution commands
+----------------------
+
+schedtest-run     - Run SchedTest suites on target and pull results
+
+
+.:: Results analysis and Documentation
+--------------------------------------
+
+schedtest-pull    - Pull (again) results from target
+schedtest-results - Pretty format tests results
+

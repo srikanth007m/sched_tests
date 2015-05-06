@@ -1,0 +1,46 @@
+
+[[test_thresholds_basic]]
+==== thresholds_basic
+
+.Goals
+Check for common migration threshold misconfigurations
+
+.Detailed Description
+Up and Down migration thresholds must be configured to reasonable values which
+almost never correspond to the boundaries of their range.
+
+If the up migration threshold is configured to be 1023, than a task will never
+be up-migrated unless it fully uses a LITTLE CPU running at its highest OPP.
+This is not in general a severe misconfiguration but it could impact on the
+responsiveness of the system to move high CPU demanding tasks on a big CPU.
+It is worth to consider that, by default, the big.LITTLE MP scheduler
+extensions spawn new tasks on big CPUs, thus this latency on up migration does
+not apply to newly created big tasks. The latency affects just the up migration
+of already running tasks which change their execution pattern at run-time to
+become more CPU intensive.
+
+If the down migration threshold is configured to be 1023, than all tasks will
+be always migrated to LITTLE CPUs, which is a severe misconfiguration.
+A 0 down migration threshold as well has to be considered a severe
+misconfiguration. Indeed, in that case, all active tasks will never be migrated
+down from big cluster. If we consider that new tasks are always fork migrated on
+big CPUs, this means that a 0 down migration threshold will enforce all tasks
+to always run on big CPUs.
+
+As a final remark, in general the up migration threshold is expected to have a
+value which is lower than that of the down migration. This is because once a
+task, with a certain CPU load demand, is up migrated we could eventually expect
+that its CPU demand will decrease since it is running on a more capable big
+core. Thus, to avoid tasks oscillations between big and LITTLE clusters, the
+two thresholds are expected to satisfy the equation:
+
+  up_threshold > down_threshold
+
+This test provides all the checks for the aforementioned basic thresholds
+configuration.
+
+.Possible issues
+
+. at least one threshold configured to the saturation value
+. overlapping thresholds values
+

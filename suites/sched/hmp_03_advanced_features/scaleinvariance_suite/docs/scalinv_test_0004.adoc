@@ -1,0 +1,30 @@
+[[test_scalinv_test_004]]
+==== scalinv_test_004
+
+.Goal
+Without invariance support, check that the frequency changes at each step and
+the task load is unchanged
+
+.Detailed Description
+This test checks if we manually change the frequencies when the scale
+invariance is disabled, the task load remains unchanged when the frequencies
+are changed at each step.
+
+The following tasks are done to assert the same.
+
+1. Determine Big Little CPUs in the system
+2. Clear existing tasks from LITTLE CPU since we are testing on the LITTLE CPU.
+3. Set Userspace governorns to access them, start task load and move it to
+   LITTLE CPU.
+4. Disable the frequency invariant load scaling
+5. Change the frequencies manually through
++/sys/devices/system/cpu/cpu${TARGET_LITTLE_CPU}/cpufreq/scaling_setspeed+ and
+set the delay to 1ms
+6. Check the traces if the task load has not changed when the frequency is
+   changed
+
+Thus, this test checks that we be able to change the frequencies without the
+invariance support and the task load is not scaled.
+
+.Possible Issues
+This test is not expected to fail.

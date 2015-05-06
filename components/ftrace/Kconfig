@@ -1,0 +1,5 @@
+config COMPONENT_FTRACE
+	bool 'ftrace'
+	default n
+	---help---
+	Deploy the ftrace component

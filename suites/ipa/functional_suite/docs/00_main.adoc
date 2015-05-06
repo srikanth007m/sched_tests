@@ -1,0 +1,36 @@
+[[suite_ipa_functional]]
+=== "IPA Functional" Test Suite
+
+.Goal
+The primary goal of this tese suite is to perform basic functionality tests to
+accomplish the following:
+
+* Check Instantiation of:
+** Cooling Devices
+** Thermal Trips
+** Thermal Zones
+
+* Check if the sysfs directory structure is created as expected
+
+* Perform basic boundary condition check for cooling device states
+
+To start the execution of just this test:
+
+[source,bash]
+----
+$ schedtest-run functional
+----
+
+Following is the list of supported tests:
+
+include::./001_check_tz_sysfs.adoc[]
+include::./002_check_cdevs.adoc[]
+include::./003_check_cpufreq_cooling.adoc[]
+include::./004_check_devfreq_cooling.adoc[]
+include::./005_check_trip_points.adoc[]
+include::./006_check_tz_cdevs.adoc[]
+include::./007_check_tz_cdev_trips.adoc[]
+include::./008_high_control_high_trigger.adoc[]
+include::./009_low_control_high_trigger.adoc[]
+include::./010_low_control_low_trigger.adoc[]
+// vim: set syntax=asciidoc:

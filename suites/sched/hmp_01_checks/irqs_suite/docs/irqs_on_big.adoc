@@ -1,0 +1,32 @@
+
+[[test_01_irqs_on_bigs]]
+==== 01_irqs_on_bigs
+
+.Goal
+Report all the IRQs which are pinned on CPUs of the big cluster.
+
+.Detailed description
+Despite the general recommendation for big.LITTLE systems to have all the IRQs
+pinned just on LITTLE CPUs, there could be some IRQs source which must be
+targeted to specific CPUs.
+
+The +procfs+ attributes +/proc/irq/IRQ#/smp_affinity+ specify which target CPUs
+are permitted for a given IRQ source.  It's a bitmask (smp_affinity) of allowed
+CPUs.  It's not allowed to turn off all CPUs, and if an IRQ controller does not
+support IRQ affinity then the value will not change from the default of all
+cpus.
+
+Reference documentation:
+http://lxr.free-electrons.com/source/Documentation/IRQ-affinity.txt
+
+This test checks and report all the IRQ sources which are currently configured
+to run on big CPUs. The test [red]#FAILS# if at least one source is routed on
+big CPUs.  However: it is responsibility of the user to identify it these IRQs
+sources must be mandatory routed on a big CPU and in that case the test could
+be considered as being [green]#PASSED#
+
+.Possible issues
+
+. some IRQ sources must be targeted on big CPUs
+. the IRQ controller does not support IRQ affinity
+

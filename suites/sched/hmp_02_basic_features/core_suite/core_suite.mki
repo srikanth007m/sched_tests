@@ -1,0 +1,38 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+ifdef CONFIG_SCHED_BASIC_CORE
+
+SUITES     += core_suite
+SUITES_DIR += suites/sched/hmp_02_basic_features/core_suite
+
+install_suites: install_suite_core install_suite_core_testcases
+clean_suites: clean_suite_core
+
+install_suite_core:
+	@echo "Installing suite $(INSTALL_DIR)/suites/core..."
+	@mkdir -p $(INSTALL_DIR)/suites/core/testcases
+
+include ./suites/sched/hmp_02_basic_features/core_suite/testcases.mki
+
+clean_suite_core:
+	@echo "Remove suite $(INSTALL_DIR)/suites/core..."
+	@rm -rf $(INSTALL_DIR)/suites/core
+
+.PHONY: install_suite_core clean_suite_core
+
+endif # CONFIG_SCHED_BASIC_CORE
+

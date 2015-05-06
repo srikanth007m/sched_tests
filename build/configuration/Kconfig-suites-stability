@@ -1,0 +1,2 @@
+source "suites/stability/non_functional_suite/Kconfig"
+source "suites/stability/regression_suite/Kconfig"

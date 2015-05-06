@@ -1,0 +1,47 @@
+
+menuconfig SCHED_BASIC_USECASES
+    bool "Use-Cases Validation"
+    default n
+    select COMPONENT_RT_APP
+    select COMPONENT_BASICS_SH
+    select COMPONENT_FUNCTESTLIB_SH
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within usecases_suite is to validate
+    the basic functional behaviour of the big.LITTLE MP reference patches
+    considering a set of significative and representative use-cases.
+
+
+
+config SCHED_BASIC_USECASES_00_SMALLTASKS
+    bool "00_smalltasks"
+    default y
+    depends on SCHED_BASIC_USECASES
+    ---help---
+    This scenario checks that a low CPU intensity workload is running on LITTLE
+    CPUs only. The worload considered is a syntetic MP3 audio decoding
+    pipeline, where all the tasks of the pipeline are expected to be executed
+    just on LITTLE CPUs.
+
+
+config SCHED_BASIC_USECASES_01_RTTASKS
+    bool "01_rttasks"
+    default y
+    depends on SCHED_BASIC_USECASES
+    ---help---
+    This scenario checks that a real-time workload is running on LITTLE CPUs
+    only. The worload considered is a mix of syntetic real-time threads with
+    different loads and temporal profiles. All the tasks of this workload
+    mix  are expected to be executed just on LITTLE CPUs.
+
+
+config SCHED_BASIC_USECASES_02_BIGTASKS
+    bool "02_bigtasks"
+    default y
+    depends on SCHED_BASIC_USECASES
+    ---help---
+    This scenario checks that an high CPU intensity workload is running on big
+    CPUs only. The worload considered is a set of batch tasks which number is
+    one more than the number of the big CPUs. Only one task is expected to
+    be running on a LITTLE CPU just for the time required to complete one of
+    the other tasks.

@@ -1,0 +1,46 @@
+[test_main_pth_str01]]
+==== main_pth_str01
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without the big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+The scheduler is the kernel component that decides which runnable thread
+will be executed by the CPU next. Each thread has an associated scheduling
+policy and a static scheduling priority, sched_priority. The scheduler makes
+its decisions based on knowledge of the scheduling policy and static priority
+of all threads on the system.
+
+Conceptually, the scheduler maintains a list of runnable threads for each
+possible sched_priority value. In order to determine which thread runs next,
+the scheduler looks for the nonempty list with the highest static priority and
+selects the thread at the head of this list.
+
+A thread's scheduling policy determines where it will be inserted into the list
+of threads with equal static priority and how it will move inside this list.
+
+The test pth_str01 stresses the scheduler to pick next task.
+
+1. Main program takes the arguments breadth and depth of the tree to be made.
+It accordingly Allocates array of pthreads descriptors and initialize variables
+like node mutex and node condition variables. It creates main/root thread and
+waits for it to exit.
+
+2. Root thread spawns a function to create children of depth and siblings of
+breadth. This function needs to synchronize if all the siblings have been
+created. This happens on a conditional wait using conditions (sends signal to
+parent) and mutex (unlocks after signal is got). If all the siblings have been
+created and it is not a leaf, next level children are created, else
+synchronization is done, tree is created,  Wait for our children to finish
+before the root exits.
+
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

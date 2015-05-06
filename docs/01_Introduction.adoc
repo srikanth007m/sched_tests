@@ -1,0 +1,25 @@
+
+== Introduction
+
+This document describes the test framework and the test suite for testing
+the ARM big.LITTLE MP scheduler extensions. This framework includes
+multiple test suites aimed at validating different functional aspects of
+the big.LITTLE MP scheduler extensions.
+
+In addition, this framework also includes functional tests for ARM's Intelligent
+Power Allocation (IPA) framework.
+
+This document is organized as follow:
+
+//- <<HMPPatchset,Section 2>> briefly describes the main patches to the
+//  Linux kernel that form the ARM big.LITTLE MP scheduler extensions and
+//  provides a reference to help understand the extensions. Each of the main features is
+//  covered by a single and self contained patch description in this section.
+- <<SchedTestSuite,Section 2>> provides instructions on how to install and use
+  the test suite. The reading of this section is mandatory in order to
+  validate the integration of the big.LITTLE MP patchset on a given target platform.
+- <<TestSuites,Section 3>> details the main goals of each test suite
+  component and the corresponding test cases. This section is useful to understand how a
+  specific test case works and to pinpoint the possible reasons for a test failure.
+
+// vim: set syntax=asciidoc:

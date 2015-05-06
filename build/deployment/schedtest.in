@@ -1,0 +1,106 @@
+#!/bin/bash
+
+source common/schedtest_colors
+source common/schedtest_results
+
+# Default options
+TARGET='__TRG__'
+DEVICE='__DEVICE__'
+ADDR='__IP__'
+USER='__USER__'
+PASS=''
+SCHEDTEST_PATH='__PATH__'
+
+# Usage notes
+usage() {
+cat <<EOF
+
+Usage: $0 [OPTIONS]...
+Install and run the testsuite on a specified target
+
+Target selection (default $TARGET):
+ -a	Android target
+ -l	Linux target
+
+Android target options:
+ -d     the device identifier (deafult: '$DEVICE')
+
+Linux target options:
+ -i	the IP address (mandatory for Linux targets)
+ -u	username for SSH access (default: '$USER')
+ -p	passowrd for SSH access (default: '$PASS')
+
+EOF
+}
+
+echo
+echo '==== SchedTest binary installation package'
+
+while getopts "had:li:u:p:" OPT; do
+    case $OPT in
+	h)
+	    usage
+	    exit 1
+	    ;;
+	a)
+	    TARGET="ANDROID"
+	    ;;
+	d)
+	    DEVIDE=$OPTARG
+	    ;;
+
+	l)
+	    TARGET="LINUX"
+	    ;;
+
+	i)
+	    ADDR=$OPTARG
+	    ;;
+	u)
+	    USER=$OPTARG
+	    ;;
+	p)
+	    PASS=$OPTARG
+	    ;;
+
+	*)
+	    usage
+	    exit
+    esac
+done
+
+android_install() {
+echo "Installing SchedTest on Android device: $DEVICE"
+echo "Curr dir: `pwd`"
+ls -la
+adb -s $DEVICE shell "mkdir -p $SCHEDTEST_PATH"
+adb -s $DEVICE shell "rm -rf $SCHEDTEST_PATH/*"
+adb -s $DEVICE push . $SCHEDTEST_PATH
+adb -s $DEVICE shell "chmod a+x $SCHEDTEST_PATH/schedtest-run"
+adb -s $DEVICE shell "cd $SCHEDTEST_PATH && ./schedtest-run"
+adb -s $DEVICE pull $SCHEDTEST_PATH
+_schedtest-getresults '.'
+}
+
+linux_install() {
+if [ $ADDR == '' ]; then
+  echo 'ERROR: missing IP address'
+  echo '       use "-i" command line option to define target'
+  exit 1
+fi
+echo "Installing SchedTest on Linux device: $ADDR"
+ssh $USER@$ADDR "mkdir -p $SCHEDTEST_PATH"
+ssh $USER@$ADDR "rm -rf $SCHEDTEST_PATH/*"
+scp -r * $USER@$ADDR:$SCHEDTEST_PATH
+ssh $USER@$ADDR "chmod a+x $SCHEDTEST_PATH/schedtest-run"
+ssh $USER@$ADDR "cd $SCHEDTEST_PATH && ./schedtest-run"
+scp -r $USER@$ADDR:$SCHEDTEST_PATH/* .
+_schedtest-getresults '.'
+}
+
+if [ ${TARGET^^} == "LINUX" ]; then
+  linux_install
+else
+  android_install
+fi
+

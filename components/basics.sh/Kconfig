@@ -1,0 +1,10 @@
+config COMPONENT_BASICS_SH
+	bool 'basics.sh'
+	default n
+	select COMPONENT_FTRACE
+	select COMPONENT_TRACE_CMD
+	select COMPONENT_TASKLIBRARY
+	select COMPONENT_AFFINITY_TOOLS
+	select COMPONENT_PLATFORM_SH
+	---help---
+	Deploy the basics.sh component

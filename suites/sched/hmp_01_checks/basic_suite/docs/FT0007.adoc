@@ -1,0 +1,17 @@
+[[test_FT0007]]
+==== "FT0007" Test Case
+
+.Goal
+This test suite asserts that the test framework's calculation of 'fast' CPUs
+are all A15s  as available from the platform. In case of TC2 it is A15s.
+
+.Detailed Description
+The big CPUs are calculated by getting the CPU list through +/proc/cpuinfo+. The
+CPU siblings lists is also populated for each CPU. The big CPU list is got
+through the A15 core ID match from the above list. If any of the big CPUs are
+differing in their IDs then the test fails.
+
+.Expected Behavior
+If all the CPUs in the populated lists are same as the ID given in the FT0007
+test suite, then, the test goes to the passed state.
+

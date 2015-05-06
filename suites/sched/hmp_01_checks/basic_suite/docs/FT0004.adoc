@@ -1,0 +1,19 @@
+[[test_FT0004]]
+==== "FT0004" Test Case
+
+.Goal
+This test suite has the aim of asserting that the scheduler has load balancing
+turned on at the package level (MC) domains.
+
+.Detailed Description
+The load balancing is used to ensure that no CPU is overloaded while others are
+idle or that there is no obvious imbalance between running cpus. This check is
+effectively done between groups at each sched_domain level that has the
++SD_LOAD_BALANCE+ flag on.
+
+The CPU List of the sched domain are listed initially through sysfs interface.
+For each MC level domain, it is checked whether the load balancing is turned on
+in the printable sched flags.
+
+.Expected Behavior
+The scheduler  has load balancing turned on at the package level (MC) domains.

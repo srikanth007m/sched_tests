@@ -1,0 +1,58 @@
+{
+	"tasks" : {
+		"AudioTick" : {
+			"priority" : -19,
+			"loop" : -1,
+			"phases" : {
+				"p1" : {
+					"loop" : 1,
+					"resume" : "AudioOut_2",
+					"timer" :  { "ref" : "tick", "period": 5000 }
+				},
+				"p2" : {
+					"loop" : 4,
+					"timer" :  { "ref" : "tick", "period": 5000 }
+				}
+			}
+		},
+		"AudioOut_2" : {
+			"priority" : -19,
+			"loop" : -1,
+			"run" :  275,
+			"resume" : "AudioTrack",
+			"run" : 4725,
+			"suspend" : "AudioOut_2"
+		},
+		"AudioTrack" : {
+			"priority" : -16,
+			"loop" : -1,
+				"suspend" : "AudioTrack",
+				"run" :  300,
+				"resume" : "gle.mp3.decoder"
+		},
+		"gle.mp3.decoder" : {
+			"priority" : -2,
+			"loop" : -1,
+				"suspend" : "gle.mp3.decoder",
+				"run" :  1150,
+				"resume" : "OMXCallbackDisp"
+		},
+		"OMXCallbackDisp" : {
+			"priority" : -2,
+			"loop" : -1,
+			"suspend" : "OMXCallbackDisp",
+			"run" :  300
+		}
+	},
+	"global" : {
+		"default_policy" : "SCHED_OTHER",
+		"duration" : 5,
+		"ftrace" : false,
+		"gnuplot" : false,
+		"logdir" : "/data/local/schedtest",
+		"log_basename" : "mp3",
+		"lock_pages" : true,
+		"frag" : 1,
+		"calibration" : "CPU0"
+	}
+}

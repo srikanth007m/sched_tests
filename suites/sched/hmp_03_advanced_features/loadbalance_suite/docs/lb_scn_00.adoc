@@ -1,0 +1,25 @@
+[[test_lb_scn_00]]
+==== lb_scn_00
+
+.Goal
+This is to assert about the Performance improvement of the system because of
+global load balancing behaviour of the scheduler.
+
+
+.Detailed Description
+This scenario does two multi-threaded runs of sysbench: One with affinity set
+to the fast cpus, and one with default affinity (all).A performance improvement
+is expected in the second case as the scheduler can use the slower CPUs as
+well.
+
+This test asserts that a periodic balance check that can down-migrate tasks if
+the faster domain is oversubscribed and the slower is under-utilized when there
+is no CPU affinity specified.
+
+.Expected Behavior
+A performance improvement is expected as the scheduler can use the slower cpus
+as well.
+
+.Possible Issues
+This test is not expected to fail.
+

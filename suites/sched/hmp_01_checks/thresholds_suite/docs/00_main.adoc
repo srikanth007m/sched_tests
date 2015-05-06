@@ -1,0 +1,37 @@
+
+[[suite_thresholds]]
+=== "Thresholds" Test Suite
+
+.Goals
+The migration thresholds define two of the main big.LITTLE MP scheduler
+extensions' parameters which allows to identify when a task should be moved
+between a big and a LITTLE cluster.
+A proper tuning of these thresholds if of paramount importance to get expected
+and optimal behaviors from the big.LITTLE MP scheduler.
+
+However, thresholds tuning is delicate operation and perhaps not even an "exact
+science".  Certain thresholds combinations could be suitable for some use-cases
+but sub-optimal for others.  For these reasons some big.LITTLE MP integrators provides
+scenario based tuning where the thresholds are adapted at run-time based on the
+specific usage scenarios in order to boost performances or reduce energy
+consumption.
+
+Without considering all the possible run-time tuning scenarios, there are some
+basic checks which could still be done on thresholds and that allows to
+investigate for potential and common misconfiguration which affects even a
+simple integration of the big.LITTLE MP scheduler.
+
+The goal of this test suite is to support the user on identify these common
+misconfiguration scenarios and issue warning to support their fix.
+
+To start the execution of just this test:
+[source,bash]
+----
+$ schedtest-run thresholds
+----
+
+Following is the list of supported tests
+
+include::./00_thresholds_basic.adoc[]
+
+// vim: set syntax=asciidoc:

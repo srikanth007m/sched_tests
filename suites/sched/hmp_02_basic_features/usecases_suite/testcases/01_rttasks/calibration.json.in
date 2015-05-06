@@ -1,0 +1,18 @@
+{
+	"tasks": {
+		"rta_l1k_r10": {
+			"loop": 1000,
+			"run": 10000,
+		},
+	},
+	"global": {
+		"default_policy" : "SCHED_OTHER",
+		"ftrace" : false,
+		"gnuplot" : false,
+		"logdir" : "/data/local/schedtest",
+		"log_basename" : "rta_calibration",
+		"lock_pages" : true,
+		"frag" : 1,
+		"calibration" : "__CPU__"
+	},
+}

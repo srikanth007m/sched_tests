@@ -1,0 +1,9 @@
+config COMPONENT_FUNCTESTLIB_SH
+	bool 'functestlib.sh'
+	default n
+	select COMPONENT_BC
+	select COMPONENT_PLATFORM_SH
+	select COMPONENT_TASKLIBRARY
+	select COMPONENT_TASKSET
+	---help---
+	Deploy the functestlib.sh component

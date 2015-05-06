@@ -1,0 +1,25 @@
+[[test_irman2]]
+==== irman2
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+This test is a load generator. It creates a huge number of pipes and forks the
+same number of child processes and keep indefinitely doing pipe reads an writes
+and hogs the CPU by mem copy operations across the main process and the
+numerous threads created.
+
+The test cases could be mem load, swap area enabled and testing process
+stability. Another test case could be wrong priority calculation which is a
+negative test case for this.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

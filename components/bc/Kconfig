@@ -1,0 +1,5 @@
+config COMPONENT_BC
+	bool 'bc'
+	default n
+	---help---
+	Deploy the bc component

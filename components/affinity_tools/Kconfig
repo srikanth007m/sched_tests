@@ -1,0 +1,5 @@
+config COMPONENT_AFFINITY_TOOLS
+	bool 'affinity_tools'
+	default n
+	---help---
+	Deploy the affinity_tools component

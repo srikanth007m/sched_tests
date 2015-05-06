@@ -1,0 +1,28 @@
+
+[[test_00_default_affinity]]
+==== 00_default_affinity
+
+.Goal
+Assert that the default affinity of each IRQ is pinned on LITTLE CPUs
+
+.Detailed Description
+The procfs attribute +/proc/irq/default_smp_affinity+ specifies default
+affinity mask that applies to all non-active IRQs.
+Once IRQ is allocated/activated its affinity bitmask will be set to the default
+mask.
+Thus, this mask is of paramount importance to ensure that all IRQ handlers
+registered at run-time (e.g. module load time) are possibly served only by
+energy efficient LITTLE cpus.
+
+Reference documentation:
+http://lxr.free-electrons.com/source/Documentation/IRQ-affinity.txt
+
+The default IRQ affinity mask is checked by this test and used and warn the
+user in case of big CPUs not being excluded.
+On a big.LITTLE system this is the recommended configuration.
+
+.Possible issues
+
+. the affinity mask has not been tuned at system boot
+. the IRQ controller does not support IRQ affinity
+

@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+%:
+	dh $@ 
+
+override_dh_auto_install:
+	mkdir -p debian/sched-tests/usr/bin
+	cp run_sched_test debian/sched-tests/usr/bin
+
+override_dh_auto_build:
+	make run_sched_test
+
+override_dh_auto_test:
+	echo skip test

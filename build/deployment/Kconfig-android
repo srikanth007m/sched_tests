@@ -1,0 +1,43 @@
+
+################################################################################
+# Android deployment options (via ADB)
+
+comment "ADB Configuration"
+
+choice
+  prompt "ADB Connection mode"
+  depends on TARGET_ANDROID
+
+  config ADB_USB
+    bool "ADB over USB"
+    ---help---
+    Connect Android device via USB cable
+
+  config ADB_IP
+    bool "ADB over IP"
+    ---help---
+    Connect Android device via IP address
+
+endchoice
+
+#############
+# ADB via USB
+
+config ADB_USB_DEVICE
+  string "Android USB device"
+  default "BABABEEFBABABEEF"
+  depends on ADB_USB
+
+config ADB_IP_ADDRESS
+  string "Android IP address"
+  default "10.0.0.1"
+  depends on ADB_IP
+
+############
+# ADB via IP
+
+config ADB_IP_PORT
+  string "Android PORT number"
+  default "5555"
+  depends on ADB_IP
+

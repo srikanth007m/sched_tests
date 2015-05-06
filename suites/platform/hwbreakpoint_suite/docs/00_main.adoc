@@ -1,0 +1,20 @@
+[[suite_hwbreakpoint]]
+=== "HwBreakpoint" Test Suite
+
+.Goal
+The primary aim of the test cases within hwbreakpoint_suite is to validate
+ability of hardware breakpoints to survive power down sequences in a big.LITTLE
+system.
+
+To start the execution of just this test:
+
+[source,bash]
+----
+$ schedtest-run hwbreakpoint
+----
+
+Following is the list of supported tests
+
+include::./hwbp_test_01.adoc[]
+
+// vim: set syntax=asciidoc:

@@ -1,0 +1,21 @@
+[[test_008_high_control_high_trigger]]
+==== 008_high_control_high_trigger
+
+.Goal
+The goal of this test is to check if basic IPA functionality in boundary
+conditions
+
+.Detailed Description
+In our setup: +
+
+* The trip point 0 represents the temperature when IPA starts monitoring the
+power allocation actively
+* The the trip point 1 represents the temperature where the the cooling devices
+0, 1 and 2 come into effect
+
+.Expected Behavior
+As both the trip points are set to high value, the cooling devices states are
+expected to remain 0.
+
+.Possible Issues
+This test is not expected to fail

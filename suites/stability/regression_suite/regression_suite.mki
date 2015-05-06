@@ -1,0 +1,41 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+ifdef CONFIG_REGRESSION_SUITE
+
+SUITES     += regression_suite
+SUITES_DIR += suites/stability/regression_suite
+
+install_suites: install_suite_regression install_suite_regression_testcases
+clean_suites: clean_suite_regression
+
+install_suite_regression:
+	@echo "Installing suite $(INSTALL_DIR)/suites/regression..."
+	@mkdir -p $(INSTALL_DIR)/suites/regression/testcases
+	@cd suites/stability/regression_suite && \
+		cp -R common/* \
+		$(INSTALL_DIR)/suites/regression
+
+include ./suites/stability/regression_suite/testcases.mki
+
+clean_suite_regression:
+	@echo "Remove suite $(INSTALL_DIR)/suites/regression..."
+	@rm -rf $(INSTALL_DIR)/suites/regression
+
+.PHONY: install_suite_regression clean_suite_regression
+
+endif # CONFIG_REGRESSION_SUITE
+

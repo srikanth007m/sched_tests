@@ -1,0 +1,38 @@
+[[test_main_pth_str02]]
+==== main_pth_str02
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+The scheduler is the kernel component that decides which runnable     thread
+will be executed by the CPU next.  Each thread has an     associated scheduling
+policy and a static scheduling priority,   sched_priority.  The scheduler makes
+its decisions based on knowledge of the scheduling policy and static priority
+of all threads on the system.
+
+Conceptually, the scheduler maintains a list of runnable threads for  each
+possible sched_priority value.  In order to determine which     thread runs
+next, the scheduler looks for the nonempty list with the highest static
+priority and selects the thread at the head of this   list.
+
+A thread's scheduling policy determines where it will be inserted   into the
+list of threads with equal static priority and how it will  move inside this
+list.
+
+The test pth_str02 stresses the scheduler to pick next task.
+
+This is a simple program which creates n number of threads recursively and
+exits. There is a limit to creating the threads in the system, that is notified.
+Since threads are a separate schedulable entities, the Number of threads that
+are scheduled are printed and noted.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

@@ -1,0 +1,23 @@
+
+Change log
+----------
+
+Version 3.0:
+
+.:: SchedTest suite
+- collect tests results into a single report file
+- add coloring support to this single report file
+- allow disabling some suites on specific targets
+  e.g. PMU not supported in Odroid-XU3
+- add defconfig selection and activation
+- add individual testcases selection
+- add FTrace binary traces support
+- allow keeping FTrace binary traces
+
+.:: Test suites and cases
+- add IRQ affinity check suite
+- add big cluster idleness on low load workload
+- add big cluster idleness on RT load workload
+- add LITTLE cluster idleness on high load workloads
+- add simple up/down migration thresholds checks
+- add functional tests for the ARM IPA (Intelligent Power Allocator)

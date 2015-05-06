@@ -1,0 +1,32 @@
+[[test_affinity_notchanged]]
+==== affinity_notchanged
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+1. Switch to CPUn through +sched_setaffinity+ call.
+
+2. Run Busy loop (mandelbrot set) with a low load of 100microseconds. This
+should migrate the task to slow CPU. Get CPU affinity of the task that is
+running through the +sched_getaffinity+ system call and verify the same. Sleep
+for 500milliseconds and Busy loop for 100microseconds. Repeat this for few
+times. We still expect ourselves to be in slow CPU since the load is low. Check
+the same through the system call.
+
+3. Now run the busy loop for 2 seconds. This should migrate the task to fast
+CPU. Get CPU affinity of the task that is running through the
++sched_getaffinity+ system call and verify the same.
+
+4. These steps are carried out for 20 times for stability of affinity for 0 to
+max number of CPUs.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

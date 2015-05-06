@@ -1,0 +1,35 @@
+
+menuconfig SCHED_IRQS
+    bool "IRQs configuration"
+    default n
+    select COMPONENT_FUNCTESTLIB_SH
+    select COMPONENT_TESTRUNNER
+    ---help---
+    The primary aim of the test cases within irq_suite is to validate and
+    confirm the configuration of the default affinity mask.  For energy
+    efficiency, on a big.LITTLE system, the IRQs are expected to be routed as
+    much as possible to LITTLE cores.
+
+    It could happens that some IRQ routines are registered at run-time, this
+    happens for example in case of modules loading.  In case these routins does
+    not requires a specific IRQ line, the default affinity mask is used to
+    configure their affinity.
+
+    This test checks the default affinity mask to ensure that big CPUs are not
+    included.
+
+config SCHED_IRQS_00_DEFAULT_AFFINITY
+    bool "00_default_affinity"
+    default y
+    depends on SCHED_IRQS
+    ---help---
+    Assert that the default affinity of each IRQ is pinned on LITTLE CPUs.
+
+
+config SCHED_IRQS_01_IRQS_ON_BIG
+    bool "01_irqs_on_big"
+    default y
+    depends on SCHED_IRQS
+    ---help---
+    Report all the IRQs which are pinned on CPUs of the big cluster.
+

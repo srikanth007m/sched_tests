@@ -1,0 +1,264 @@
+# ShedTest Shell: the big.LITTLE Scheduler Test Shell
+SHELL=$(cat /proc/$$/cmdline)
+if [ $SHELL != "bash" ]; then
+	echo "The SchedTest shell requires a BASH shell"
+	echo "Source this shell configuratio from a terminal running BASH."
+fi
+
+source build/configuration/schedtest_colors
+
+################################################################################
+# Generic ShedTest Shell commands
+################################################################################
+
+# ShedTest Shell On-Line HELP
+function schedtest-help {
+clear
+echo -ne '\E[37;42m'
+echo "                                                                               "
+echo "                    .:: ShedTest Shell - HELP On-Line ::.                      "
+echo "                                                                               "
+echo -ne "$STSHELL_RESET$STSHELL_GREEN"
+cat SchedTestShell.txt
+echo -ne "$STSHELL_DEFAULT"
+}
+
+function schedtest-docs {
+echo -ne "${STSHELL_BLUE}"
+echo -e "*** Opening SchedTest documentation [docs/index.html]"
+echo -ne "$STSHELL_DEFAULT"
+xdg-open docs/index.html
+sleep 3
+echo
+}
+
+function schedtest-version {
+echo -ne "$STSHELL_GREEN"
+cat <<EOF
+
+.:: $(git describe --tags)
+Build configuration:
+    Target............... $(_schedtest-get CONFIG_TARGET_PLATFORM)
+    Board................ $(_schedtest-get CONFIG_TARGET_DESCRIPTION)
+
+EOF
+echo -ne "$STSHELL_DEFAULT"
+}
+
+# - XWindows geometries recoveder using "xwininfo" utility
+# - Font is configured by "-fn" option, to see a list of fonts run:
+#     "xlsfonts | less"
+FONT=-misc-fixed-medium-r-normal--10-100-75-75-c-60-iso10646-1
+function schedtest-shell {
+	aterm +sb -fn $FONT -geometry 118x37+711+240 -title "SchedTest Shell"  \
+			-e /bin/bash --init-file ./init_env \
+			&>/dev/null &
+}
+
+################################################################################
+# Common SchedTest Building targets
+################################################################################
+
+function __schedtest-configs {
+echo "Available configurations:"
+find build/configuration/defconfig/ -name "schedtest*.defconfig" | \
+sort | while read F; do \
+  CONF=`basename $F`
+  echo $CONF | sed 's/^schedtest-/  /; s/.defconfig$//'
+done
+echo
+echo "Load a default configuration with:"
+echo "  schedtest-config <configuration_name>"
+echo
+echo "Update current configuration with:"
+echo "  schedtest-config menu"
+echo
+echo "Save current configuration with:"
+echo "  schedtest-config save <configuration_name>"
+echo
+echo "Current configuration could be reset with:"
+echo "  schedtest-config reset"
+}
+
+function __schedtest-config-save {
+CONFIG=${1:-"none"}
+
+if [ $CONFIG = "none" ]; then
+  echo "ERROR: missing configuration name"
+  echo
+  echo "Save current configuration with:"
+  echo "  schedtest-config save <configuration_name>"
+  echo
+  return 1
+fi
+FILEPATH="build/configuration/defconfig/schedtest-${CONFIG}.defconfig"
+if [ -f $FILEPATH ]; then
+  echo "WARNING: Default configuration [$CONFIG] already exists"
+  echo -n "         Do you want to update it? [y/N] "
+  read KEY
+  [ ! "x${KEY^}" = "xY" ] && return
+fi
+echo "Saving current configuration with name [$CONFIG]..."
+cp build/configuration/schedtest-config \
+   build/configuration/defconfig/schedtest-${CONFIG}.defconfig
+echo
+return 0
+}
+
+function schedtest-config {
+local CONFIG=${1:-"list"}
+if [ $CONFIG = "list" ]; then
+  __schedtest-configs
+  echo
+  return 0
+fi
+if [ $CONFIG = "menu" ]; then
+  make menuconfig
+elif [ $CONFIG = "reset" ]; then
+  echo "WARNING: resetting current configuration"
+  rm build/configuration/schedtest-config 2>/dev/null
+  echo
+  make menuconfig
+elif [ $CONFIG = "save" ]; then
+  __schedtest-config-save $2
+elif [ ! -f build/configuration/defconfig/schedtest-${CONFIG}.defconfig ]; then
+  echo "ERROR: default configuration [$CONFIG] not found"
+  echo
+  __schedtest-configs
+  return 1
+else
+  echo -ne "${STSHELL_BLUE}"
+  echo -e "*** Configuring SchedTest build"
+  echo -ne "$STSHELL_DEFAULT"
+  echo
+  echo "Loading default configuration [$CONFIG]..."
+  cp build/configuration/defconfig/schedtest-${CONFIG}.defconfig \
+     build/configuration/schedtest-config
+  echo
+  return 0
+fi
+}
+
+function schedtest-clean {
+echo -ne "${STSHELL_BLUE}"
+echo -e "*** Cleaning up SchedTest (suites and components)"
+echo -ne "$STSHELL_DEFAULT"
+make clean
+echo
+}
+
+function schedtest-wipe {
+echo -ne "${STSHELL_BLUE}"
+echo -e "*** Wipe SchedTest (local and remote)"
+echo -ne "$STSHELL_DEFAULT"
+make platform_wipe clean_install
+echo
+}
+
+function schedtest-build {
+echo -ne "${STSHELL_BLUE}"
+echo -e "*** Building and Installing SchedTest locally"
+echo -ne "$STSHELL_DEFAULT"
+make install
+echo
+}
+
+function schedtest-install {
+echo -ne "${STSHELL_BLUE}"
+echo -e "*** Installing SchedTest on target device"
+echo -ne "$STSHELL_DEFAULT"
+make install push
+echo
+}
+
+function schedtest-run {
+SUITES=${@:-"all"}
+echo -ne "${STSHELL_BLUE}"
+echo -e "*** Running [$SUITES] SchedTest suite/s on target"
+echo -ne "$STSHELL_DEFAULT"
+if [ "$SUITES" = "all" ]; then
+  make run pull
+else
+  for S in $SUITES; do
+    make run-${S}_suite
+  done
+  make pull
+fi
+echo
+_schedtest-getresults
+}
+
+function schedtest-pull {
+SUITES=${@:-"all"}
+echo -ne "${STSHELL_BLUE}"
+echo -e "*** Pulling all SchedTest results from target"
+echo -ne "$STSHELL_DEFAULT"
+make pull
+_schedtest-getresults
+}
+
+function schedtest-release {
+echo -ne "${STSHELL_BLUE}"
+echo -e "*** Build selfcontained deployment package"
+echo -ne "$STSHELL_DEFAULT"
+make release_build
+echo
+}
+
+function schedtest-archive {
+echo -ne "${STSHELL_BLUE}"
+echo -e "*** Build a tarball of the SchedTest binaries"
+echo -ne "$STSHELL_DEFAULT"
+make archive
+echo
+}
+
+function schedtest-package {
+PKG=${1:-'schedtest'}
+echo -ne "${STSHELL_BLUE}"
+echo -e "*** Build a SchedTest binary installation package"
+echo -ne "$STSHELL_DEFAULT"
+PACKAGE_NAME="$PKG" make package-build
+}
+
+
+################################################################################
+# Other utility functions
+################################################################################
+
+function _schedtest-get {
+awk -F= -v CONF=$1 \
+	'$0 ~ CONF {print gensub(/"(.+)"/, "\\1", "g", $2)}' \
+	build/configuration/schedtest-config
+}
+
+source build/configuration/schedtest_results
+
+################################################################################
+# ShedTest Shell MAIN
+################################################################################
+
+# Setup Shell variables
+PS1="\[${STSHELL_BLUE}\][SchedTestShell \[${STSHELL_LCYAN}\]\W\[${STSHELL_BLUE}\]] \> \[${STSHELL_DEFAULT}\]"
+
+# Dump out a nice ShedTest Shell logo
+clear
+echo -e '\E[37;44m'
+
+echo "                                                                               "
+echo "                        .:: ShedTest Shell ::.                                 "
+echo "                                                                               "
+echo -ne "$STSHELL_RESET$STSHELL_BLUE"
+cat <<EOF
+
+Welcome to the big.LITTLE Scheduler Test SHELL!
+
+Type "schedtest-help" for on-line help on available commands
+
+EOF
+
+# Setup default SHELL text color
+echo -e "$STSHELL_DEFAULT"
+
+#
+# vim: set tabstop=4:

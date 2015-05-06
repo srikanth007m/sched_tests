@@ -1,0 +1,5 @@
+config COMPONENT_RT_APP
+	bool 'rt-app'
+	default n
+	---help---
+	Deploy the rt-app component

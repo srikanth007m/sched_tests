@@ -1,0 +1,31 @@
+{
+	"tasks" : {
+		"SmlRT" : {
+			"priority" : 10,
+			"run" : 2500,
+			"timer" :  { "ref" : "tick_sml", "period": 10000 },
+			"loop" : -1,
+		},
+		"MedRT" : {
+			"priority" : 10,
+			"run" : 50000,
+			"timer" :  { "ref" : "tick_med", "period": 100000 },
+			"loop" : -1,
+		},
+		"BigRT" : {
+			"priority" : 10,
+			"run" : 750000,
+			"timer" :  { "ref" : "tick_big", "period": 1000000 },
+			"loop" : -1,
+		},
+	},
+	"global" : {
+		"default_policy" : "SCHED_RR",
+		"duration" : 5,
+		"ftrace" : false,
+		"gnuplot" : false,
+		"logdir" : "/data/local/schedtest",
+		"log_basename" : "rttasks",
+		"calibration" : __CALIB__
+	}
+}

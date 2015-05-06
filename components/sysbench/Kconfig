@@ -1,0 +1,5 @@
+config COMPONENT_SYSBENCH
+	bool 'sysbench'
+	default n
+	---help---
+	Deploy the sysbench component

@@ -1,0 +1,31 @@
+[[test_pipe_test_1m]]
+==== pipe_test_1m
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+This test case is similar to pipe-test.c this test will run for 1000000 loops
+and prints the usec/loop and return.
+
+1. Main process forks child process. Parent writes on pipe on one end and
+child will read from the other end of the pipe. Thereafter, the child writes
+back to the parent another message.
+
+
+2. This will iterate for 1000000 loops and time will be calculated before first
+loop and end of the last loop and the time difference by number of loops will
+be printed as the number of usec/loop.
+
+The number of schedulable entities is limited but the way it is scheduled is
+observed here.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+scheduler.
+
+.Possible Issues
+This test is not expected to fail.

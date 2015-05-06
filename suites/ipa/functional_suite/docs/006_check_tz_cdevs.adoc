@@ -1,0 +1,21 @@
+[[test_006_check_tz_cdevs]]
+==== 006_check_tz_cdevs
+
+.Goal
+The goal of this test is to check if the cooling devices are bound to the
+thermal_zone
+
+.Expected Behavior
+All the three cooling devices 0, 1 and 2 are expected to be bound to the
+thermal_zone0.  The following files must exists for this test to succeed.
+
+* Base Directory
+** `/sys/class/thermal/thermal_zone0`
+
+* Files
+** `cdev<index>` (link to the cooling device)
+** `cdev<index>_weight`
+** `cdev<index>_trip_point`
+
+.Possible Issues
+This test is not expected to fail

@@ -1,0 +1,28 @@
+[[test_chew]]
+==== chew
+
+.Goal
+This is to test the scheduler of any vulnerabilities which might be present
+with or without big.LITTLE MP scheduler extensions.
+
+.Detailed Description
+These tests are taken from LWN.net
+
+This test checks that when the Round Robin Scheduling algorithm is used, the
+scheduler executes the tasks between regular intervals. The scheduler latency
+which is set in the beginning to 2ms through +cat
+/proc/sys/kernel/sched_latency_ns+. The quantum is set by +sched_rr_interval+
+call to 8seconds.
+
+This test gets the Round Robin time quantum for the calling process for 8
+seconds run window, repeated in a loop 6 times after sleeping every 2 seconds
+between loops.  Within an 8 sec execution window we are checking if the time
+threshold between the RR time quantum obtained is < 2ms. If not it is reported
+a failure.
+
+.Expected Behavior
+The expected behaviour is to that there are no vulnerabilities present in the
+vanilla scheduler.
+
+.Possible Issues
+This test is not expected to fail.

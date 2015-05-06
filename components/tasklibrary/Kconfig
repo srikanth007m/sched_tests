@@ -1,0 +1,5 @@
+config COMPONENT_TASKLIBRARY
+	bool 'tasklibrary'
+	default n
+	---help---
+	Deploy the tasklibrary component

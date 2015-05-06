@@ -1,0 +1,22 @@
+SchedTest User Guide
+====================
+Copyright (C) 2015, ARM Limited
+:Author Initials: ARMLtd
+:toc:
+:icons:
+:numbered:
+:website: http://www.arm.com/
+
+[[Introduction]]
+include::./01_Introduction.adoc[]
+
+// [[HMPPatchset]]
+// include::./02_HMPPatchset.adoc[]
+
+[[SchedTestSuite]]
+include::./03_SchedTestSuite.adoc[]
+
+[[TestSuites]]
+include::./04_TestSuites.adoc[]
+
+// vim: set syntax=asciidoc:

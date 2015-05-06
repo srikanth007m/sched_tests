@@ -1,0 +1,65 @@
+
+# Source SchedTest configuration
+source ./init_env
+
+TAG=`date +"%d-%m-%Y-%H-%M-%S"`
+LOGFILE=sched_tests_log_$TAG.txt
+
+if [[ $CONFIG_TARGET_ANDROID == "y" ]]; then
+    LOG=| busybox tee -a $LOGFILE
+else
+    LOG=| tee -a $LOGFILE
+fi
+
+usage() {
+    echo
+    echo "Usage: $0 [-h] [-s suite]"
+    echo
+    echo "Runs the specified test suite or, if no arguments are given,"
+    echo "all the tests of all the installed suites."
+    echo
+    echo "-h prints this help mesage"
+    echo "-i iterations"
+    echo "-s suites to run"
+    echo
+}
+
+
+run_tests() {
+    ITERATIONS=$1
+    SUITE=$2
+
+    cd $BASEDIR
+
+    [[ -z $SUITE ]] && SUITE=$(ls suites/)
+    for S in $SUITE; do
+        echo
+        echo "==== Running [$S] test suite, $ITERATIONS iterations" $LOG
+        ./testrunner --verbose --run releasetest --all --suite $S --n $ITERATIONS
+    done
+    echo
+    echo "Test suites execution completed" $LOG
+    echo
+}
+
+ITERATIONS=$CONFIG_ITERATIONS
+while getopts "hi:s:" OPT; do
+    case $OPT in
+	h)
+	    usage
+	    exit 1
+	    ;;
+	i)
+	    ITERATIONS=$OPTARG
+	    ;;
+	s)
+	    SUITE=$OPTARG
+	    ;;
+	*)
+	    usage
+	    exit
+    esac
+done
+
+run_tests $ITERATIONS $SUITE
+

@@ -1,0 +1,41 @@
+################################################################################
+# Copyright (C) 2015 ARM Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2, as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+ifdef CONFIG_SCHED_ADVANCED_SCALEINVARIANCE
+
+SUITES     += scaleinvariance_suite
+SUITES_DIR += suites/sched/hmp_03_advanced_features/scaleinvariance_suite
+
+install_suites: install_suite_scaleinvariance install_suite_scaleinvariance_testcases
+clean_suites: clean_suite_scaleinvariance
+
+install_suite_scaleinvariance:
+	@echo "Installing suite $(INSTALL_DIR)/suites/scaleinvariance..."
+	@mkdir -p $(INSTALL_DIR)/suites/scaleinvariance/testcases
+	@cd suites/sched/hmp_03_advanced_features/scaleinvariance_suite && \
+		cp -R common/* \
+		$(INSTALL_DIR)/suites/scaleinvariance
+
+include ./suites/sched/hmp_03_advanced_features/scaleinvariance_suite/testcases.mki
+
+clean_suite_scaleinvariance:
+	@echo "Remove suite $(INSTALL_DIR)/suites/scaleinvariance..."
+	@rm -rf $(INSTALL_DIR)/suites/scaleinvariance
+
+.PHONY: install_suite_scaleinvariance clean_suite_scaleinvariance
+
+endif # CONFIG_SCHED_ADVANCED_SCALEINVARIANCE
+
