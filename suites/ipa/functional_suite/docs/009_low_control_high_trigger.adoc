@@ -19,23 +19,4 @@ which activates the cooling devices in our setup is relatviely high. The
 cooling device states are expected to be 0.
 
 .Possible Issues
-In some versions of Juno LSK, this test can fail with an output
-similar to the following:
-
-----
-Checking cdev_id: 0 (devfreq)
-Failed: cur_state for devfreq is 4
-Checking cdev_id: 1 (thermal-cpufreq-0)
-Passed: cur_state for  thermal-cpufreq-0 is 0
-Checking cdev_id: 2 (thermal-cpufreq-1)
-Passed: cur_state for  thermal-cpufreq-1 is 0
-Fatal error: an unexpected error has occurred!
-----
-
-devfreq is the cooling device for the GPU.  If the GPU doesn't have
-any load, the devfreq cooling device may decide to reduce its
-frequency even if the control temperature is high and there is thermal
-budget.  This is not a problem because as soon as there is any load,
-the GPU would get all the power.  Unfortunately, this test is usually
-run with the GPU idling and that's why it can fail.  This is
-a false-positive.
+This test is not expected to fail
