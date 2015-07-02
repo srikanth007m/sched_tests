@@ -106,7 +106,7 @@ DYNAMIC_TEST1=1
 LAST_FREQCHANGE_TIME=0
 LAST_FREQCHANGE_FREQ=0
 LAST_FREQCHANGE_RATIO=0
-MAX_FREQ=1000000
+MAX_FREQ=`cat "/sys/devices/system/cpu/cpu${TARGET_LITTLE_CPU}/cpufreq/cpuinfo_max_freq"`
 # check success criteria for new CPU power scale
 if [ -e "/sys/devices/system/cpu/cpu${TARGET_LITTLE_CPU}/topology/base_cpu_power" ] ; then
   BASEPOWER=`cat "/sys/devices/system/cpu/cpu${TARGET_LITTLE_CPU}/topology/base_cpu_power"`
