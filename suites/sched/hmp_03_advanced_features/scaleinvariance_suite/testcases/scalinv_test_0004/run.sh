@@ -26,9 +26,9 @@ source ../../../../init_env
 # set time delay between frequency steps
 STEP_DELAY=1
 # set frequency of big cluster
-BIG_FREQ=1200000
+BIG_FREQ=`echo $CONFIG_BIGLITTLE_BIG_FREQS | awk '{print $2}'`000
 # set frequency of little cluster
-LITTLE_FREQ=1000000
+LITTLE_FREQ=`echo $CONFIG_BIGLITTLE_LITTLE_FREQS | awk '{print $2}'`000
 # location of tracing in filesystem
 TRACEDIR="/sys/kernel/debug/tracing"
 
